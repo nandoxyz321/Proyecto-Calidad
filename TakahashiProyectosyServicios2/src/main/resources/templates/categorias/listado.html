@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head th:replace="principal/index :: head"></head>
+<body>
+
+	<div th:replace="principal/index :: header" class="header"></div>
+
+	<div th:replace="principal/index :: sidebar" class="sidebar"></div>
+
+
+	<div class="main-container">
+
+
+
+		<div class="container">
+
+			<div class="card mt-3">
+				<div class="card-header text-center bg-danger text-white"
+					th:text="${titulo}">LISTADO DE CATEGORIAS</div>
+				<div class="card-body table-responsive">
+					<table class="table table-bordered table-hover">
+						<thead class="thead-dark">
+							<tr>
+								<th>ID</th>
+								<th>CODIGO</th>
+								<th>NOMBRE</th>
+								<th>DESCRIPCION</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="item: ${categorias}">
+								<td><a th:href="@{form/}+${item.idCategoria}"
+									th:text="${item.idCategoria}"></a></td>
+								<td th:text="${item.codigo}"></td>
+								<td th:text="${item.nombre}"></td>
+								<td th:text="${item.descripcion}"></td>
+								<td><a th:href="@{eliminar/}+${item.idCategoria}"
+									class="btn btn-danger"
+									onclick="return confirm('Estas seguro de eliminar?');">delete</a></td>
+							</tr>
+						</tbody>
+					</table>
+					<br> <a th:href="@{form}" class="btn btn-info">nueva
+						categoria</a>
+				</div>
+			</div>
+
+		</div>
+
+	</div>
+
+</body>
+</html>

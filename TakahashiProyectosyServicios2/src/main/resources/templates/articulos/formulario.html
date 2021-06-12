@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head th:replace="principal/index :: head"></head>
+<body>
+<div class="wrapper">
+        <div th:replace="principal/index :: header" class="header"></div>
+
+		<div th:replace="principal/index :: sidebar" class="sidebar"></div>
+
+		<div class="main-container"> 
+    	
+    		<div class="container mt-3">
+        <div class="card">
+            <h2 class="card-header text-center" th:text="${titulo}"></h2>
+            <form th:action="@{/articulos/form}" th:object="${articulo}" method="post">
+            <div class="card-body">
+              <h5 class="card-title"></h5>
+             
+                <div class="row mb-3">
+                    <div class="col-6">
+                        <label>CODIGO ARTÍCULO</label>
+                        <input type="text" th:field="*{codigoArticulo}" class="form-control" placeholder="ingresar código" th:errorclass="'form-control alert-danger'"/>
+                       	<small class="form-text text-danger" th:if="${#fields.hasErrors('codigoArticulo')}" th:errors="*{codigoArticulo}"></small>
+                    </div>
+                    <div class="col-4">
+                        <label>SELECCIONE PROVEEDOR</label>
+                        <select th:field="*{proveedores.idProveedores}" class="form-control" th:errorclass="'form-control alert-danger'">
+                        	<option th:each="prov: ${listarproveedor}" th:value="${prov.idProveedores}" th:text="${prov.razonSocial}"></option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-6">
+                        <label>NOMBRE DEL ARTÍCULO</label>
+                        <input type="text" th:field="*{nombre}" class="form-control" placeholder="INGRESE NOMBRE" th:errorclass="'form-control alert-danger'" />
+                        <small class="form-text text-danger" th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}"></small>
+                    </div>
+
+                    <div class="col-6">
+                        <label>DESCRIPCION DEL ARTÍCULO</label>
+                        <input type="text" th:field="*{descripcion}" class="form-control" placeholder="INGRESE descripcion" th:errorclass="'form-control alert-danger'" />
+                        <small class="form-text text-danger" th:if="${#fields.hasErrors('descripcion')}" th:errors="*{descripcion}"></small> 
+                    </div>
+                </div>
+
+
+                <div class="row mb-3">
+                    <div class="col-4">
+                        <label>INGRESE STOCK DEL ARTÍCULO</label>
+                        <input type="text" th:field="*{stock}" class="form-control" placeholder="INGRESE EL STOCK" th:errorclass="'form-control alert-danger'"/>
+                        <small class="form-text text-danger" th:if="${#fields.hasErrors('stock')}" th:errors="*{stock}"></small> 
+                    </div>
+
+                    <div class="col-4">
+                        <label>ESTADO</label>
+                        <input type="text" th:field="*{estado}" class="form-control" placeholder="INGRESE estado" th:errorclass="'form-control alert-danger'"/>
+                        <small class="form-text text-danger" th:if="${#fields.hasErrors('estado')}" th:errors="*{estado}"></small> 
+                    </div>
+
+                    <div class="col-4">
+                        <label>SELECCIONE CATEGORIA</label>
+                        <select th:field="*{categoria.idCategoria}" class="form-control">
+                        	<option th:each="cat: ${listarcategoria}" th:value="${cat.idCategoria}" th:text="${cat.nombre}"></option>
+                        </select>
+                    </div>      
+                </div>
+
+				<input type="hidden" th:field="*{idArticulo}">
+                <div class="row">
+                    <div class="col-12 text-center">
+                        <button class="btn btn-danger btn-lg" type="submit">REGISTRAR ARTÍCULO</button>
+                    </div>
+                </div>
+               
+
+            </div>
+            </form>
+          </div>
+    </div>
+    	
+    	</div>
+		
+    </div>
+</body>
+</html>

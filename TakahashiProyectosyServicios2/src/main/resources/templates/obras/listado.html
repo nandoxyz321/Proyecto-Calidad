@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head th:replace="principal/index :: head"></head>
+<body>
+	<div class="wrapper">
+		<div th:replace="principal/index :: header" class="header"></div>
+
+		<div th:replace="principal/index :: sidebar" class="sidebar"></div>
+
+		<div class="wrapper">
+			<div th:replace="principal/index :: header" class="header"></div>
+
+			<div th:replace="principal/index :: sidebar" class="sidebar"></div>
+
+
+			<div class="main-container">
+				<div class="container">
+
+					<div class="card mt-3">
+						<div class="card-header bg-danger text-center text-white"
+							th:text="${titulo}">LISTADO DE OBRAS</div>
+						<div class="card-body table-responsive">
+							<table class="table table-bordered table-hover">
+								<thead class="thead-dark">
+									<tr>
+										<th>ID</th>
+										<th>CODIGO</th>
+										<th>PROYECTO</th>
+										<th>DIRECCION</th>
+										<th>RAZON SOCIAL</th>
+										<th>REPRESENTANTE</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr th:each="item: ${obras}">
+										<td><a th:href="@{form/}+${item.idObra}"
+											th:text="${item.idObra}"></a></td>
+										<td th:text="${item.codigoObra}"></td>
+										<td th:text="${item.nombreProyecto}"></td>
+										<td th:text="${item.direccion}"></td>
+										<td th:text="${item.razonSocialCliente}"></td>
+										<td th:text="${item.nombreRepresentante}"></td>
+										<td><a th:href="@{eliminar/}+${item.idObra}"
+											class="btn btn-danger"
+											onclick="return confirm('Estas seguro de eliminar?');"><i class="far fa-trash-alt"></i></a>
+											<a th:href="@{ver/}+${item.idObra}"
+											class="btn btn-info"><i class="fas fa-eye"></i></a></td>
+									</tr>
+								</tbody>
+							</table>
+							<br> <a th:href="@{form}" class="btn btn-info">nueva
+								obra</a>
+						</div>
+					</div>
+
+				</div>
+
+			</div>
+
+		</div>
+
+	</div>
+</body>
+</html>

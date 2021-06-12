@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FORMULARIO</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}"/>
+    <script type="text/javascript" th:src="@{/js/jquery-3.5.1.min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/bootstrap.min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/popper.min.js}"></script>
+</head>
+<body>
+    
+    <div class="container mt-3">
+        <div class="card">
+            <h2 class="card-header text-center" th:text="${titulo}"></h2>
+            <form th:action="@{/trabajadores/form}" th:object="${trabajador}" method="post">
+            <div class="card-body">
+              <h5 class="card-title"></h5>
+             
+                <div class="row mb-3">
+                    <div class="col-6">
+                        <label>CODIGO TRABAJADOR</label>
+                        <input type="text" th:field="*{codigoTrabajador}" class="form-control" placeholder="INGRESE CODIGO">
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-6">
+                        <label>NOMBRE TRABAJADOR</label>
+                        <input type="text" th:field="*{nombre}" class="form-control" placeholder="INGRESE NOMBRE">
+                    </div>
+
+                    <div class="col-6">
+                        <label>APELLIDO TRABAJADOR</label>
+                        <input type="text" th:field="*{apellido}" class="form-control" placeholder="INGRESE APELLIDO">
+                    </div>
+                </div>
+
+
+                <div class="row mb-3">
+                    <div class="col-4">
+                        <label>DNI TRABAJADOR</label>
+                        <input type="text" th:field="*{dni}" class="form-control" placeholder="INGRESE DNI">
+                    </div>
+
+                    <div class="col-4">
+                        <label>EDAD TRABAJADOR</label>
+                        <input type="text" th:field="*{edad}" class="form-control" placeholder="INGRESE EDAD">
+                    </div>
+
+                    <div class="col-4">
+                        <label>SEXO TRABAJADOR</label>
+                        <input type="text" th:field="*{sexo}" class="form-control" placeholder="INGRESE SEXO">
+                    </div>
+                </div>
+
+
+                <div class="row mb-3">
+                    <div class="col-6">
+                        <label>DIRECCION TRABAJADOR</label>
+                        <input type="text" th:field="*{direccion}" class="form-control" placeholder="INGRESE DIRECCION">
+                    </div>
+	
+					<div class="col-6">
+						<label>CARGO TRABAJADOR</label>
+						<input type="text" th:field="*{cargo}" class="form-control" placeholder="INGRESE CARGO">
+					</div>
+					<!-- <div class="col-6">
+                        <label>CARGO TRABAJADOR</label>
+                        <select name="" id="" class="form-control">
+                        <option hiden selected>SELECCIONE CARGO</option>
+                        <option value="">SECRETARIO</option>
+                        <option value="">ALMACENERO</option>
+                        <option value="">OPERARIO</option>
+                        </select>
+                    </div> -->
+                    
+                </div>
+
+
+                <div class="row mb-3">
+                    <div class="col-6">
+                        <label>USUARIO TRABAJADOR</label>
+                        <input type="text" th:field="*{usuario}" class="form-control" placeholder="INGRESE USUARIO">
+                    </div>
+
+                    <div class="col-6">
+                        <label>CONTRASEÑA TRABAJADOR</label>
+                        <input type="text" th:field="*{contrasena}" class="form-control" placeholder="INGRESE CONTRASEÑA">
+                    </div>
+                </div>
+				<input type="hidden" th:field="*{idTrabajador}">
+                <div class="row">
+                    <div class="col-12 text-center">
+                        <button class="btn btn-danger btn-lg" type="submit">REGISTRAR TRABAJADOR</button>
+                    </div>
+                </div>
+               
+
+            </div>
+            </form>
+          </div>
+    </div>
+
+</body>
+</html>

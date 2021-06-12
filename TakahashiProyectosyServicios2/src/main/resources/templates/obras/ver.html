@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head th:replace="principal/index :: head"></head>
+<body>
+	<div class="wrapper">
+		<div th:replace="principal/index :: header" class="header"></div>
+
+		<div th:replace="principal/index :: sidebar" class="sidebar"></div>
+
+		<div class="wrapper">
+			<div th:replace="principal/index :: header" class="header"></div>
+
+			<div th:replace="principal/index :: sidebar" class="sidebar"></div>
+
+
+			<div class="main-container">
+				<div class="container">
+
+					<div class="card mt-3">
+						<div class="card-header text-center bg-danger text-white"
+							th:text="${titulo}"></div>
+
+						<div class="card-body">
+							<div class="row mb-4">
+								<div class="col-4">
+									<h4>código:</h4>
+									<div class="p-2 border bg-light">
+										<h5 th:text="${obra.codigoObra}"></h5>
+									</div>
+								</div>
+
+								<div class="col-4">
+									<h4>proyecto:</h4>
+									<div class="p-2 border bg-light">
+										<h5 th:text="${obra.nombreProyecto}"></h5>
+									</div>
+
+								</div>
+
+								<div class="col-4">
+									<h4>dirección:</h4>
+									<div class="p-2 border bg-light">
+										<h5 th:text="${obra.direccion}"></h5>
+									</div>
+
+								</div>
+							</div>
+
+							<div class="row mb-2">
+								<div class="col-6">
+									<h4>razón social del cliente:</h4>
+									<div class="p-2 border bg-light">
+										<h5 th:text="${obra.razonSocialCliente}"></h5>
+									</div>
+
+								</div>
+
+								<div class="col-6">
+									<h4>representante:</h4>
+									<div class="p-2 border bg-light">
+										<h5 th:text="${obra.nombreRepresentante}"></h5>
+									</div>
+
+								</div>
+
+							</div>
+
+						</div>
+
+
+
+					</div>
+
+				</div>
+
+				<div class="container">
+					<div class="card mt-3">
+						<div class="card-header text-center bg-dark text-white"
+							th:text="${tituloGuia}"></div>
+
+						<div class="card-body">
+
+<div th:if="${#lists.isEmpty(obra.guias)}" class="alert alert-info" th:text="'la obra '+${obra.nombreProyecto}+' no cuenta con guias registradas'"></div>
+							<table th:if="${not #lists.isEmpty(obra.guias)}" class="table table-bordered table-spriped ">
+
+								<thead>
+									<tr>
+										<th>id</th>
+										<th>CÓDIGO</th>
+										<th>DESTINO</th>
+										<th>FECHA SALIDA</th>
+										<th>FECHA LLEGADA</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr th:each="guia: ${obra.guias}">
+
+										<td><a th:href="@{/obras/verGuia/}+${guia.idGuia}" th:Text="${guia.idGuia}"></a></td>
+										<td th:text="${guia.codigoGuia}"></td>
+										<td th:text="${guia.destino}"></td>
+										<td th:text="${guia.fechaSalida}"></td>
+										<td th:text="${guia.fechallegada}"></td>
+										<td><a class="btn btn-danger btn-sm" th:href="@{/obras/eliminarGuia/}+${guia.idGuia}" th:text="eliminar" onclick="return confirm('¿Estas seguro de eliminar la guia?')"></a></td>
+
+
+
+									</tr>
+
+
+
+								</tbody>
+							</table>
+
+
+
+						</div>
+
+					</div>
+
+
+				</div>
+
+			</div>
+
+		</div>
+
+	</div>
+</body>
+</html>

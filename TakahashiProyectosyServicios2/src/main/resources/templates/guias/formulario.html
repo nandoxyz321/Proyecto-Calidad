@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head th:replace="principal/index :: head"></head>
+<body>
+	<div class="wrapper">
+		<div th:replace="principal/index :: header" class="header"></div>
+
+		<div th:replace="principal/index :: sidebar" class="sidebar"></div>
+
+		<div class="main-container">
+
+			<div class="container mt-3">
+				<div class="card">
+					<h2 class="card-header bg-danger text-white text-center"
+						th:text="${titulo}"></h2>
+					<form th:action="@{/guias/form}" th:object="${guia}" method="post">
+						<div class="card-body">
+							<h5 class="card-title"></h5>
+
+							<div class="form-group row">
+								<label class="col-sm-2 col-form-label">SELECCIONE OBRA</label>
+								<div class="col-sm-6">
+									<select th:field="*{obra.idObra}" class="form-control">
+										<option th:each="obr: ${listarobra}" th:value="${obr.idObra}"
+											th:text="${obr.nombreProyecto}"></option>
+									</select>
+								</div>
+							</div>
+
+
+							<div class="form-group row">
+								<label class="col-sm-2 col-form-label">CODIGO GUIA</label>
+								<div class="col-sm-6">
+									<input type="text" th:field="*{codigoGuia}"
+										class="form-control" placeholder="ingresar código" th:errorclass="'form-control alert-danger'"/>
+									<small class="form-text text-danger" th:if="${#fields.hasErrors('codigoGuia')}" th:errors="*{codigoGuia}"></small>
+								</div>
+							</div>
+
+
+							<div class="form-group row">
+								<label class="col-sm-2 col-form-label">DESTINO</label>
+								<div class="col-sm-6">
+									<input type="text" th:field="*{destino}" class="form-control"
+										placeholder="ingresar destino" th:errorclass="'form-control alert-danger'"/>
+									<small class="form-text text-danger" th:if="${#fields.hasErrors('destino')}" th:errors="*{destino}"></small>
+								</div>
+							</div>
+
+							<div class="form-group row">
+								<label class="col-sm-2 col-form-label">FECHA DE SALIDA</label>
+								<div class="col-sm-6">
+									<input type="date" th:field="*{fechaSalida}"
+										class="form-control" placeholder="ingresar destino" th:errorclass="'form-control alert-danger'"/>
+									<small class="form-text text-danger" th:if="${#fields.hasErrors('fechaSalida')}" th:errors="*{fechaSalida}"></small>
+								</div>
+							</div>
+
+							<div class="form-group row">
+								<label class="col-sm-2 col-form-label">FECHA DE LLEGADA</label>
+								<div class="col-sm-6">
+									<input type="date" th:field="*{fechallegada}"
+										class="form-control" placeholder="ingresar destino" th:errorclass="'form-control alert-danger'"/>
+									<small class="form-text text-danger" th:if="${#fields.hasErrors('fechallegada')}" th:errors="*{fechallegada}"></small>
+								</div>
+							</div>
+
+							<div class="form-group row">
+								<label form="buscar_articulo" class="col-sm-2 col-form-label"
+									th:text="'Buscar Artículo'"></label>
+								<div class="col-sm-6">
+									<input type="text" name="buscar_articulo" id="buscar_articulo"
+										class="form-control" placeholder="ingresar destino" />
+								</div>
+							</div>
+
+							<table th:replace="guias/plantilla-items :: detallesGuia"></table>
+
+							<table id="cargarDetalleArticulos"
+								class="table table-sm table-stripped table hover">
+								<thead>
+									<tr>
+										<th>NOMBRE</th>
+										<th>CANTIDAD</th>
+										<th>ELIMINAR</th>
+									</tr>
+								</thead>
+								<tbody>
+								</tbody>
+							</table>
+
+							<input type="hidden" th:field="*{idGuia}">
+							<div class="form-group row">
+								<div class="col-sm-6">
+									<input type="submit" class="btn btn-secondary" />
+									<!--  <small class="form-text text-danger" th:if="${#fields.hasErrors('codigoTrabajador')}" th:errors="*{codigoTrabajador}"></small>-->
+								</div>
+							</div>
+
+						</div>
+
+					</form>
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+	<script th:replace="guias/js/autocomplete-articulos :: javascript"></script>
+</body>
+</html>

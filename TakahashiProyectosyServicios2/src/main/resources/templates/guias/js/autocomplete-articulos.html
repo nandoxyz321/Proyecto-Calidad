@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<body>
+	<script type="text/javascript" th:fragment="javascript">
+		
+		$(document).ready(function(){
+			$("#buscar_articulo").autocomplete({
+				source: function(request, response){
+					$.ajax({
+						url: "/guias/cargar-articulos/" + request.term,
+						datatype: "json",
+						data:{
+							term: request.term
+						},
+						success: function(data){
+							response($.map(data,function(item){
+								return{
+									value: item.idArticulo,
+									label: item.nombre,
+								};
+							}));
+						},
+					});
+				},
+				select : function(event,ui){
+					//$("#buscar_articulo").val(ui.item.label);
+					
+					if(detalleHelper.hasArticulo(ui.item.value)){
+						detalleHelper.incrementaCantidad(ui.item.value);
+						return false;
+					}
+					
+					var detalle=$("#plantilladetallesGuia").html();
+					
+					detalle = detalle.replace(/{idArticulo}/g, ui.item.value);
+					detalle = detalle.replace(/{NOMBRE}/g,ui.item.label);
+					
+					$("#cargarDetalleArticulos tbody").append(detalle);
+					
+					return false;
+				}
+
+			});
+			
+			$("form").submit(function(){
+				$("#plantilladetallesGuia").remove();
+				return;
+			});
+		});
+		
+		var detalleHelper = {
+				hasArticulo: function(idArticulo){
+				
+					var resultado = false;
+					
+					$('input[name="detalle_idArticulo[]"]').each(function(){
+						
+						if(parseInt(idArticulo) ==  parseInt( $(this).val()) ){
+							resultado = true;
+						}
+					});
+					return resultado;
+				},
+				incrementaCantidad: function(idArticulo){
+					var cantidad = $("#cantidad_"+idArticulo).val() ? parseInt($("#cantidad_"+idArticulo).val()) :0;
+					$("#cantidad_"+idArticulo).val(++cantidad);
+				},
+				eliminarDetalleArticulo: function(idArticulo){
+					$("#row_"+idArticulo).remove();
+				}
+		}
+		
+	</script>
+</body>
+</html>

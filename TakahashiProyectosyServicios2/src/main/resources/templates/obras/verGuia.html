@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head th:replace="principal/index :: head"></head>
+<body>
+	<div class="wrapper">
+		<div th:replace="principal/index :: header" class="header"></div>
+
+		<div th:replace="principal/index :: sidebar" class="sidebar"></div>
+
+		<div class="wrapper">
+			<div th:replace="principal/index :: header" class="header"></div>
+
+			<div th:replace="principal/index :: sidebar" class="sidebar"></div>
+
+
+			<div class="main-container">
+				<div class="container">
+
+					<div class="card mt-3">
+						<div class="card-header text-center bg-danger text-white"
+							th:text="${titulo}"></div>
+
+						<div class="card-body">
+							<div class="row mb-4">
+								<div class="col-6">
+									<h4>código:</h4>
+									<div class="p-2 border bg-light">
+										<h5 th:text="${guia.codigoGuia}"></h5>
+									</div>
+								</div>
+
+								<div class="col-6">
+									<h4>destino:</h4>
+									<div class="p-2 border bg-light">
+										<h5 th:text="${guia.destino}"></h5>
+									</div>
+
+								</div>
+								
+							</div>
+
+							<div class="row mb-2">
+								<div class="col-6">
+									<h4>fecha de salida:</h4>
+									<div class="p-2 border bg-light">
+										<h5 th:text="${guia.fechaSalida}"></h5>
+									</div>
+
+								</div>
+								<div class="col-6">
+									<h4>fecha de llegada:</h4>
+									<div class="p-2 border bg-light">
+										<h5 th:text="${guia.fechallegada}"></h5>
+									</div>
+								</div>
+							</div>
+
+						</div>
+
+
+
+					</div>
+
+				</div>
+
+				<div class="container">
+					<div class="card mt-3">
+						<div class="card-header text-center bg-dark text-white"
+							th:text="${tituloDetalles}"></div>
+
+						<div class="card-body">
+
+							<table class="table table-bordered table-spriped ">
+
+								<thead>
+									<tr>
+										<th>id</th>
+										<th>NOMBRE</th>
+										<th>CANTIDAD</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr th:each="detalleGuia: ${guia.detalles}">
+										<td th:Text="${detalleGuia.idDetalleGuia}"></td>
+										<td th:text="${detalleGuia.articulo.nombre}"></td>
+										<td th:text="${detalleGuia.cantidad}"></td>
+									</tr>
+
+
+
+								</tbody>
+							</table>
+
+
+
+						</div>
+
+					</div>
+
+
+				</div>
+
+			</div>
+
+		</div>
+
+	</div>
+</body>
+</html>

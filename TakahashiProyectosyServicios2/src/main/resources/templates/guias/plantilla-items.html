@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+
+	<table th:fragment="detallesGuia" class="d-none">
+	
+		<tbody id="plantilladetallesGuia">
+			<tr id="row_{idArticulo}">
+				<td class="d-none"><input type="hidden" value="{idArticulo}"
+					name="detalle_idArticulo[]"></td>
+				<td>{NOMBRE}</td>
+				<td><input type="number" value="1" name="cantidad[]"
+					id="cantidad_{idArticulo}" class="form-control col-sm-4" /></td>
+				<td><a href="#" class="btn btn-danger" onclick="detalleHelper.eliminarDetalleArticulo({idArticulo});">X</a></td>
+			</tr>
+		</tbody>
+	</table>
+
+</body>
+</html>

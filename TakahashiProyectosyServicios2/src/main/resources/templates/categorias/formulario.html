@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head th:replace="principal/index :: head"></head>
+<body>
+	<div class="wrapper">
+		<div th:replace="principal/index :: header" class="header"></div>
+
+		<div th:replace="principal/index :: sidebar" class="sidebar"></div>
+
+		<div class="wrapper">
+			<div th:replace="principal/index :: header" class="header"></div>
+
+			<div th:replace="principal/index :: sidebar" class="sidebar"></div>
+
+			<div class="main-container">
+
+				<div class="container mt-3">
+					<div class="card">
+						<h2 class="card-header text-center" th:text="${titulo}"></h2>
+						<form th:action="@{/categorias/form}" th:object="${categoria}"
+							method="post">
+							<div class="card-body">
+								<h5 class="card-title"></h5>
+
+								<div class="row mb-3">
+									<div class="col-6">
+										<label>CODIGO CATEGORIA</label> <input type="text"
+											th:field="*{codigo}" class="form-control"
+											placeholder="ingresar código" th:errorclass="'form-control alert-danger'"/>
+										 <small class="form-text text-danger" th:if="${#fields.hasErrors('codigo')}" th:errors="*{codigo}"></small>
+									</div>
+									<div class="col-6">
+										<label>NOMBRE CATEGORIA</label> <input type="text"
+											th:field="*{nombre}" class="form-control"
+											placeholder="INGRESE NOMBRE"
+											th:errorclass="'form-control alert-danger'" />
+										 <small class="form-text text-danger" th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}"></small> 
+									</div>
+								</div>
+
+								<div class="row mb-3">
+									<div class="col-12">
+										<label>DESCRIPCION</label> <input type="text"
+											th:field="*{descripcion}" class="form-control"
+											placeholder="INGRESE descripcion"
+											th:errorclass="'form-control alert-danger'" />
+										 <small class="form-text text-danger" th:if="${#fields.hasErrors('descripcion')}" th:errors="*{descripcion}"></small> 
+									</div>
+									<br>
+								</div>
+
+								<input type="hidden" th:field="*{idCategoria}">
+								<div class="row">
+									<div class="col-12 text-center">
+										<button class="btn btn-danger btn-lg" type="submit">REGISTRAR
+											CATEGORIA</button>
+									</div>
+								</div>
+
+
+							</div>
+						</form>
+					</div>
+				</div>
+
+			</div>
+
+		</div>
+</body>
+</html>
