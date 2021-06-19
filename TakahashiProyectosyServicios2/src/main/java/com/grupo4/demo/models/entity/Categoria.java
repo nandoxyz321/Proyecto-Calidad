@@ -23,15 +23,15 @@ public class Categoria implements Serializable{
 	@Column(name = "idcategoria")
 	private Long idCategoria;
 	
-	@NotEmpty
-	@Size(min = 1,max = 6,message = "el código debe estar entre 1 y 6 caracteres")
+	//@NotEmpty
+	//@Size(min = 1,max = 6,message = "el código debe estar entre 1 y 6 caracteres")
 	@Column(name = "codigo")
 	private String codigo;
 	
 	@Column(name = "nombre")
 	@NotEmpty
-	@Size(min = 1,max = 25,message = "el nombre debe contener no mas de 25 caracteres")
-	@Pattern(regexp = "^([a-zA-Z]+)(\\s[a-zA-Z]+)*$",message = "solo se admiten letras")
+	@Size(min = 1,max = 35,message = "el nombre debe contener no mas de 35 caracteres")
+	@Pattern(regexp = "^([a-zA-ZñÑáéíóúÁÉÍÓÚ]+)(\\s[a-zA-ZñÑáéíóúÁÉÍÓÚ]+)*$",message = "solo se admiten letras y acentos")
 	private String nombre;
 	
 	@NotEmpty

@@ -12,10 +12,13 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.grupo4.demo.models.entity.Articulo;
 import com.grupo4.demo.models.entity.Categoria;
 import com.grupo4.demo.models.entity.Proveedores;
+import com.grupo4.demo.models.entity.DAO.IArticuloDAO;
+import com.grupo4.demo.models.entity.DAO.IDetalleguiaDAO;
 import com.grupo4.demo.models.entity.service.IArticuloService;
 import com.grupo4.demo.models.entity.service.ICategoriaService;
 import com.grupo4.demo.models.entity.service.IProveedoresService;
@@ -23,7 +26,13 @@ import com.grupo4.demo.models.entity.service.IProveedoresService;
 @Controller
 @RequestMapping("/articulos")
 public class ArticuloController {
+	
+	@Autowired
+	private IDetalleguiaDAO detalleguiaDAO;
 
+	@Autowired
+	private IArticuloDAO articuloDAO;
+	
 	@Autowired
 	private IArticuloService articuloService;
 	
@@ -54,7 +63,64 @@ public class ArticuloController {
 			model.addAttribute("titulo", "formulario articulos");
 			return "articulos/formulario";
 		}
-		articuloService.save(articulo);
+		
+		int valor = articulo.getNombre().hashCode();
+		if(valor<0) {
+			valor=valor*-1;
+		}
+		String valore = String.valueOf(valor);
+		char valorA=categoriaservice.findOne(articulo.getCategoria().getIdCategoria()).getNombre().charAt(0);
+		
+		char valorB = proveedoresService.findOne(articulo.getProveedores().getIdProveedores()).getRazonSocial().charAt(0);
+		
+		String codigoGenerado = valore.concat(String.valueOf(valorA).concat(String.valueOf(valorB)));
+		
+		if(articulo.getIdArticulo() == null) {
+			
+			if(articuloDAO.findByCodigoArticulo(codigoGenerado).isPresent()) {
+				model.addAttribute("error", "el artículo ya ha sido registrado");
+				model.addAttribute("titulo", "formulario articulos");
+				return "articulos/formulario";
+			}
+			
+			if(articulo.getStock()>12) {
+				articulo.setEstado("en stock");
+			}else if(articulo.getStock()>=1){
+				articulo.setEstado("pocas unidades");
+			}else {
+				articulo.setEstado("agotado");
+			}
+			
+			articulo.setCodigoArticulo(codigoGenerado);
+			articuloService.save(articulo);
+			
+		}else {
+			
+			if(articulo.getStock()>12) {
+				articulo.setEstado("en stock");
+			}else if(articulo.getStock()>1){
+				articulo.setEstado("pocas unidades");
+			}else {
+				articulo.setEstado("agotado");
+			}
+			
+			if(articuloDAO.findByCodigoArticulo(codigoGenerado).isPresent()) {
+				
+				if (articuloDAO.findByCodigoArticulo(codigoGenerado).orElse(null).getIdArticulo() == articulo.getIdArticulo()) {
+					articuloService.save(articulo);
+					return "redirect:/articulos/listado";
+				}
+				
+				model.addAttribute("error", "el artículo ya ha sido registrado");
+				model.addAttribute("titulo", "Editar artículo");
+				return "articulos/formulario";
+				
+			}else {
+				articulo.setCodigoArticulo(codigoGenerado);
+				articuloService.save(articulo);
+			}
+		}
+		
 		return "redirect:/articulos/listado";
 	}
 	
@@ -72,9 +138,14 @@ public class ArticuloController {
 	}
 	
 	@RequestMapping("/eliminar/{idArticulo}")
-	public String eliminar(@PathVariable(value = "idArticulo")Long idArticulo) {
+	public String eliminar(@PathVariable(value = "idArticulo")Long idArticulo, RedirectAttributes flash) {
 		if(idArticulo>0) {
-			articuloService.delete(idArticulo);
+			if(detalleguiaDAO.findbydetaye(idArticulo).isEmpty()) {
+				articuloService.delete(idArticulo);
+			}else{
+				flash.addFlashAttribute("error","el producto está siendo usado en las guias");
+			}
+			
 		}
 		return "redirect:/articulos/listado";
 	}

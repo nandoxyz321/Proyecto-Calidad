@@ -14,7 +14,6 @@ import javax.persistence.Table;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
@@ -29,13 +28,13 @@ public class Articulo implements Serializable{
 	@Column(name = "idarticulo")
 	private Long idArticulo;
 	
-	@NotEmpty
-	@Size(min = 1,max = 6,message = "el código debe estar entre 1 y 6 caracteres")
+	//@NotEmpty
+	//@Size(min = 1,max = 6,message = "el código debe estar entre 1 y 6 caracteres")
 	@Column(name = "codigoarticulo")
 	private String codigoArticulo;
 	
 	@Size(min = 1,max = 40 ,message = "el nombre debe contener no mas de 40 caracteres")
-	@Pattern(regexp = "^([a-zA-Z0-9]+)(\\s[a-zA-Z]+)*$",message = "solo se admiten letras y números")
+	@Pattern(regexp = "^([a-zA-Z0-9]+)(\\s[a-zA-Z0-9]+)*$",message = "solo se admiten letras y números")
 	@Column(name = "nombre")
 	private String nombre;
 	
@@ -43,12 +42,12 @@ public class Articulo implements Serializable{
 	@Column(name = "descripcion")
 	private String descripcion;
 	
-	@Min(value = 1,message = "el stock mínimo es 1")
-	@Max(value=100, message = "el stock máximo es 100")
+	@Min(value = 0,message = "el stock mínimo es 1")
+	@Max(value=1000, message = "el stock máximo es 1000")
 	@Column(name = "stock")
 	private int stock;
 	
-	@NotEmpty
+	//@NotEmpty
 	@Column(name = "estado")
 	private String estado;
 	

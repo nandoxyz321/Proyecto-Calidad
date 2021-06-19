@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head th:replace="principal/index :: head"></head>
+<body>
+	<div class="wrapper">
+		<div th:replace="principal/index :: header" class="header"></div>
+
+		<div th:replace="principal/index :: sidebar" class="sidebar"></div>
+
+		<div class="wrapper">
+			<div th:replace="principal/index :: header" class="header"></div>
+
+			<div th:replace="principal/index :: sidebar" class="sidebar"></div>
+
+
+			<div class="main-container">
+
+				<div class="container">
+					<div class="card mt-3">
+						<div class="card-header text-center bg-dark text-white"
+							th:text="${titulo}"></div>
+
+						<div class="card-body">
+
+<div th:if="${#lists.isEmpty(trabajador.guias)}" class="alert alert-info" th:text="'El trabajador no ha registrado ninguna guia'"></div>
+							<table th:if="${not #lists.isEmpty(trabajador.guias)}" class="table table-bordered table-spriped ">
+
+								<thead>
+									<tr>
+										<th>id</th>
+										<th>DESTINO</th>
+										<th>FECHA SALIDA</th>
+										<th>FECHA LLEGADA</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr th:each="guia: ${trabajador.guias}">
+
+										<td><a th:href="@{../../obras/verGuia/}+${guia.idGuia}" th:Text="${guia.idGuia}"></a></td>
+										<td th:text="${guia.destino}"></td>
+										<td th:text="${guia.fechaSalida}"></td>
+										<td th:text="${guia.fechallegada}"></td>
+
+									</tr>
+
+
+
+								</tbody>
+							</table>
+
+
+
+						</div>
+
+					</div>
+
+
+				</div>
+
+			</div>
+
+		</div>
+
+	</div>
+</body>
+</html>

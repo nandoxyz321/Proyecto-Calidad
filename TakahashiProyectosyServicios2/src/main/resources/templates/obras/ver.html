@@ -86,7 +86,6 @@
 								<thead>
 									<tr>
 										<th>id</th>
-										<th>CÓDIGO</th>
 										<th>DESTINO</th>
 										<th>FECHA SALIDA</th>
 										<th>FECHA LLEGADA</th>
@@ -96,7 +95,6 @@
 									<tr th:each="guia: ${obra.guias}">
 
 										<td><a th:href="@{/obras/verGuia/}+${guia.idGuia}" th:Text="${guia.idGuia}"></a></td>
-										<td th:text="${guia.codigoGuia}"></td>
 										<td th:text="${guia.destino}"></td>
 										<td th:text="${guia.fechaSalida}"></td>
 										<td th:text="${guia.fechallegada}"></td>

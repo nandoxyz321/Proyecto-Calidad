@@ -9,12 +9,22 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 import com.grupo4.demo.models.entity.Categoria;
+import com.grupo4.demo.models.entity.DAO.IArticuloDAO;
+import com.grupo4.demo.models.entity.DAO.ICategoriaDAO;
 import com.grupo4.demo.models.entity.service.ICategoriaService;
 
 @Controller
 @RequestMapping("/categorias")
 public class CategoriaController {
+	
+	@Autowired
+	private IArticuloDAO articuloDAO;
+	
+	@Autowired
+	private ICategoriaDAO categoriaDAO;
 	
 	@Autowired
 	private ICategoriaService categoriaService;
@@ -40,7 +50,39 @@ public class CategoriaController {
 			model.addAttribute("titulo", "formulario categoria");
 			return "categorias/formulario";
 		}
-		categoriaService.save(categoria);
+		int valor = categoria.getNombre().hashCode();
+		if(valor<0) {
+			valor=valor*-1;
+		}
+		String valore = String.valueOf(valor);
+		if(categoria.getIdCategoria() == null) {
+			
+			if(categoriaDAO.findByCodigo(valore).isPresent()) {
+				model.addAttribute("titulo", "formulario categoria");
+				model.addAttribute("error", "la categoria ya ha sido registrado");
+				return "categorias/formulario";
+			}
+			categoria.setCodigo(valore);
+			categoriaService.save(categoria);
+			
+		}else {
+			
+			if(categoriaDAO.findByCodigo(valore).isPresent()) {
+				
+				if (categoriaDAO.findByCodigo(valore).orElse(null).getIdCategoria() == categoria.getIdCategoria()) {
+					categoriaService.save(categoria);
+					return "redirect:/categorias/listado";
+				}
+				
+				model.addAttribute("titulo", "Editar categoria");
+				model.addAttribute("error", "la categoria ya ha sido registrado");
+				return "categorias/formulario";
+				
+			}else {
+				categoriaService.save(categoria);
+			}
+			
+		}
 		return "redirect:/categorias/listado";
 	}
 	
@@ -58,9 +100,14 @@ public class CategoriaController {
 	}
 	
 	@RequestMapping("/eliminar/{idCategoria}")
-	public String eliminar(@PathVariable(value = "idCategoria")Long idCategoria) {
+	public String eliminar(@PathVariable(value = "idCategoria")Long idCategoria, RedirectAttributes flash) {
 		if(idCategoria>0) {
-			categoriaService.delete(idCategoria);
+			if(articuloDAO.findBycate(idCategoria).isEmpty()) {
+				categoriaService.delete(idCategoria);
+			}else{
+				flash.addFlashAttribute("error","la categoria tiene productos relacionados");
+			}
+			
 		}
 		return "redirect:/categorias/listado";
 	}

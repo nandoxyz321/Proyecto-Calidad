@@ -19,8 +19,8 @@
                 <div class="row mb-3">
                     <div class="col-6">
                         <label>CODIGO ARTÍCULO</label>
-                        <input type="text" th:field="*{codigoArticulo}" class="form-control" placeholder="ingresar código" th:errorclass="'form-control alert-danger'"/>
-                       	<small class="form-text text-danger" th:if="${#fields.hasErrors('codigoArticulo')}" th:errors="*{codigoArticulo}"></small>
+                        <input type="text" th:field="*{codigoArticulo}" class="form-control" placeholder="código generado" readonly/>
+                     	<!--  <small class="form-text text-danger" th:if="${#fields.hasErrors('codigoArticulo')}" th:errors="*{codigoArticulo}"></small>-->
                     </div>
                     <div class="col-4">
                         <label>SELECCIONE PROVEEDOR</label>
@@ -35,6 +35,7 @@
                         <label>NOMBRE DEL ARTÍCULO</label>
                         <input type="text" th:field="*{nombre}" class="form-control" placeholder="INGRESE NOMBRE" th:errorclass="'form-control alert-danger'" />
                         <small class="form-text text-danger" th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}"></small>
+                        <small class="form-text text-danger" th:if="${error != null}"  th:text="${error}"></small>
                     </div>
 
                     <div class="col-6">
@@ -54,8 +55,8 @@
 
                     <div class="col-4">
                         <label>ESTADO</label>
-                        <input type="text" th:field="*{estado}" class="form-control" placeholder="INGRESE estado" th:errorclass="'form-control alert-danger'"/>
-                        <small class="form-text text-danger" th:if="${#fields.hasErrors('estado')}" th:errors="*{estado}"></small> 
+                        <input type="text" th:field="*{estado}" class="form-control" placeholder="estado generado" readonly/>
+                        <!--  <small class="form-text text-danger" th:if="${#fields.hasErrors('estado')}" th:errors="*{estado}"></small>--> 
                     </div>
 
                     <div class="col-4">

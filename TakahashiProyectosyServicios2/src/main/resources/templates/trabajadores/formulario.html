@@ -47,12 +47,13 @@
                         <label>DNI TRABAJADOR</label>
                         <input type="text" th:field="*{dni}" class="form-control" placeholder="INGRESE DNI" th:errorclass="'form-control alert-danger'"/>
                         <small class="form-text text-danger" th:if="${#fields.hasErrors('dni')}" th:errors="*{dni}"></small>
+                        <small class="form-text text-danger" th:if="${error != null}" th:text="${error}"></small>
                     </div>
 
                     <div class="col-4">
                         <label>CORREO</label>
-                        <input type="email" th:field="*{correo}" class="form-control" placeholder="INGRESE su email" th:errorclass="'form-control alert-danger'"/>
-                        <small class="form-text text-danger" th:if="${#fields.hasErrors('correo')}" th:errors="*{correo}"></small>
+                        <input type="email" th:field="*{email}" class="form-control" placeholder="INGRESE su email" pattern="^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$" th:errorclass="'form-control alert-danger'"/>
+                        <small class="form-text text-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></small>
                     </div>
 
                     
@@ -72,13 +73,13 @@
                 <div class="row mb-3">
                     <div class="col-6">
                         <label>DIRECCION TRABAJADOR</label>
-                        <input type="text" th:field="*{direccion}" class="form-control" placeholder="INGRESE DIRECCION" th:errorclass="'form-control alert-danger'"/>
+                        <input type="text" th:field="*{direccion}" class="form-control"  placeholder="INGRESE DIRECCION" th:errorclass="'form-control alert-danger'"/>
                         <small class="form-text text-danger" th:if="${#fields.hasErrors('direccion')}" th:errors="*{direccion}"></small>
                     </div>
 	
 					<div class="col-6">
                         <label>TELEFONO</label>
-                        <input type="text" th:field="*{telefono}" class="form-control" placeholder="INGRESE TELEFONO" th:errorclass="'form-control alert-danger'"/>
+                        <input type="text" th:field="*{telefono}" class="form-control" placeholder="INGRESE TELEFONO" th:errorclass="'form-control alert-danger'" maxlength="9" minlength="9" pattern="[0-9]+" title="solo números"/>
                         <small class="form-text text-danger" th:if="${#fields.hasErrors('telefono')}" th:errors="*{telefono}"></small>
                     </div>
 					                    
@@ -87,12 +88,13 @@
 
                 <div class="row mb-3">
 
-                    <div class="col-6">
+                    <div class="col-6" th:if="${pass == 1}" >
                         <label>CONTRASEÑA TRABAJADOR</label>
-                        <input type="text" th:field="*{password}" class="form-control" placeholder="contraseña generada" />
-                        <small class="form-text text-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{contrasena}"></small> 
+                        <input type="text" th:field="*{password}" class="form-control" placeholder="INGRESE CONTRASEÑA" maxlength="10" minlength="1" required />
+                        <small class="form-text text-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></small> 
                     </div>
                 </div>
+                <input type="hidden" th:if="${pass == 0}" th:field="*{password}" >
 				<input type="hidden" th:field="*{idTrabajador}">
                 <div class="row">
                     <div class="col-12 text-center">

@@ -5,6 +5,9 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -21,9 +24,12 @@ import com.grupo4.demo.models.entity.Articulo;
 import com.grupo4.demo.models.entity.DetalleGuia;
 import com.grupo4.demo.models.entity.Guia;
 import com.grupo4.demo.models.entity.Obra;
+import com.grupo4.demo.models.entity.Trabajador;
+import com.grupo4.demo.models.entity.DAO.ITrabajadorDAO;
 import com.grupo4.demo.models.entity.service.IArticuloService;
 import com.grupo4.demo.models.entity.service.IGuiaService;
 import com.grupo4.demo.models.entity.service.IObraService;
+
 
 @Controller
 @RequestMapping("/guias")
@@ -31,6 +37,9 @@ public class GuiaController {
 
 	@Autowired
 	private IObraService obraService;
+	
+	@Autowired
+	private ITrabajadorDAO trabajadorDAO;
 	
 	@Autowired
 	private IArticuloService articuloService;
@@ -66,16 +75,57 @@ public class GuiaController {
 			return "guias/formulario";
 		}
 		
+		if (detalleID == null || detalleID.length == 0) {
+			model.addAttribute("titulo", "formulario guia");
+			model.addAttribute("error", "Error: La factura NO puede estár sin productos");
+			if(guia.getFechallegada().isBefore(guia.getFechaSalida())) {
+				model.addAttribute("error2", "ingrese las fechas correctas");
+			}
+			return "guias/formulario";
+		}
+		
+		if(guia.getFechallegada().isBefore(guia.getFechaSalida())) {
+			model.addAttribute("titulo", "formulario guia");
+			model.addAttribute("error2", "ingrese las fechas correctas");
+			return "guias/formulario";
+		}
+		
 		Obra obra = obraService.findOne(guia.getObra().getIdObra());
 		guia.setObra(obra);
+		
+		//obteniendo al ususario en sesion
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		UserDetails userDetail = (UserDetails) auth.getPrincipal();
+		
+		Trabajador trabajador = trabajadorDAO.findByUsername(userDetail.getUsername());
+		
+		guia.setTrabajador(trabajador);
+		
+		String codigo = guia.getDestino().substring(1, 2).concat(guia.getFechaSalida().toString().substring(8,10)
+						.concat(guia.getFechallegada().toString().substring(8,10)))
+						.concat(obra.getNombreProyecto().substring(8)
+						.concat(String.valueOf(trabajador.getIdTrabajador())));
+		
+		guia.setCodigoGuia(codigo);
+		//Trabajador trabajadores = trabajadorService.findOne(trabajador.getIdTrabajador());
+		guia.setTrabajador(trabajador);
 		
 		for(int i=0;i<detalleID.length;i++) {
 			Articulo articulo = articuloService.findOne(detalleID[i]);
 			DetalleGuia detalleguia = new DetalleGuia();
 			detalleguia.setCantidad(cantidad[i]);
 			detalleguia.setArticulo(articulo);
+			articulo.setStock(articulo.getStock()-detalleguia.getCantidad());
+			if(articulo.getStock()>12) {
+				articulo.setEstado("en stock");
+			}else if(articulo.getStock()>1){
+				articulo.setEstado("pocas unidades");
+			}else {
+				articulo.setEstado("agotado");
+			}
 			guia.addDetalleGuia(detalleguia);
 		}
+		
 		
 		guiaService.save(guia);
 		

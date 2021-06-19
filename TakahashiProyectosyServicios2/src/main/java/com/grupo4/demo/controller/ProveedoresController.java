@@ -9,13 +9,22 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.grupo4.demo.models.entity.Proveedores;
+import com.grupo4.demo.models.entity.DAO.IArticuloDAO;
+import com.grupo4.demo.models.entity.DAO.IProveedorDAO;
 import com.grupo4.demo.models.entity.service.IProveedoresService;
 
 @Controller
 @RequestMapping("/proveedores")
 public class ProveedoresController {
+	
+	@Autowired
+	private IArticuloDAO articuloDAO;
+	
+	@Autowired
+	private IProveedorDAO proveedorDAO;
 
 	@Autowired
 	private IProveedoresService proveedoresService;
@@ -42,7 +51,35 @@ public class ProveedoresController {
 			model.addAttribute("titulo", "formulario Proveedores");
 			return "proveedores/formulario";
 		}
-		proveedoresService.save(proveedores);
+		
+		//proveedor por crearse
+		if(proveedores.getIdProveedores() == null) {
+			
+			if(proveedorDAO.findByRUC(proveedores.getRUC()).isPresent()) {
+				model.addAttribute("error", "el RUC ya ha sido registrado");
+				model.addAttribute("titulo", "formulario Proveedores");
+				return "proveedores/formulario";
+			}
+			
+			proveedoresService.save(proveedores);
+		}
+		//proveedor ya existente
+		else {
+			if(proveedorDAO.findByRUC(proveedores.getRUC()).isPresent()) {
+				System.out.println("es null o khe ?");
+				if (proveedorDAO.findByRUC(proveedores.getRUC()).orElse(null).getIdProveedores() == proveedores.getIdProveedores()) {
+					System.out.println("es null o khe ?");
+					proveedoresService.save(proveedores);
+					return "redirect:/proveedores/listado";
+				}
+				model.addAttribute("error", "el RUC ya ha sido registrado");
+				model.addAttribute("titulo", "Editar proveedor");
+				return "proveedores/formulario";
+			}else{
+				proveedoresService.save(proveedores);
+			}
+			
+		}
 		
 		return "redirect:/proveedores/listado";
 	}
@@ -61,9 +98,13 @@ public class ProveedoresController {
 	}
 	
 	@RequestMapping("/eliminar/{idProveedores}")
-	public String eliminar(@PathVariable(value="idProveedores") Long idProveedores) {
+	public String eliminar(@PathVariable(value="idProveedores") Long idProveedores, RedirectAttributes flash) {
 		if(idProveedores > 0) {
-			proveedoresService.delete(idProveedores);
+			if(articuloDAO.findByprovedor(idProveedores).isEmpty()) {
+				proveedoresService.delete(idProveedores);
+			}else{
+				flash.addFlashAttribute("error","el proveedor tiene productos relacionados");
+			}
 		}
 		return "redirect:/proveedores/listado";
 	}

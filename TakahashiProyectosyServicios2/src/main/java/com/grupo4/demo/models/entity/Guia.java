@@ -1,8 +1,8 @@
 package com.grupo4.demo.models.entity;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -16,9 +16,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.validation.constraints.FutureOrPresent;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -33,8 +33,8 @@ public class Guia implements Serializable{
 	@Column(name = "idguia")
 	private Long idGuia;
 	
-	@NotEmpty
-	@Size(min = 1, max = 6, message = "el código debe estar entre 1 y 6 caracteres ")
+	//@NotEmpty
+	//@Size(min = 1, max = 6, message = "el código debe estar entre 1 y 6 caracteres ")
 	@Column(name = "codigoguia")
 	private String codigoGuia;
 	
@@ -44,20 +44,27 @@ public class Guia implements Serializable{
 	private String destino;
 	
 	
-	@Temporal(TemporalType.DATE)
 	@Column(name = "fechasalida")
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	private Date fechaSalida;
+	@NotNull
+	@FutureOrPresent(message = "selecciona una fecha válida")
+	private LocalDate fechaSalida;
 	
 	
-	@Temporal(TemporalType.DATE)
 	@Column(name = "fechallegada")
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	private Date fechallegada;
+	@NotNull
+	@FutureOrPresent(message = "selecciona una fecha válida")
+	private LocalDate fechallegada;
 	
 	@JoinColumn(name = "idobra")
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Obra obra;
+	
+	@JoinColumn(name = "idtrabajador")
+	@ManyToOne(fetch = FetchType.LAZY)
+	private Trabajador trabajador;
+	
 	
 	@OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
 	@JoinColumn(name = "idguia")
@@ -109,40 +116,32 @@ public class Guia implements Serializable{
 		this.destino = destino;
 	}
 
-
-
-
-	public Date getFechaSalida() {
-		return fechaSalida;
-	}
-
-
-
-
-	public void setFechaSalida(Date fechaSalida) {
-		this.fechaSalida = fechaSalida;
-	}
-
-
-
-
-	public Date getFechallegada() {
-		return fechallegada;
-	}
-
-
-
-
-	public void setFechallegada(Date fechallegada) {
-		this.fechallegada = fechallegada;
-	}
-
-
+	
 	public Obra getObra() {
 		return obra;
 	}
 
+	
 
+
+	public LocalDate getFechaSalida() {
+		return fechaSalida;
+	}
+
+
+	public void setFechaSalida(LocalDate fechaSalida) {
+		this.fechaSalida = fechaSalida;
+	}
+
+
+	public LocalDate getFechallegada() {
+		return fechallegada;
+	}
+
+
+	public void setFechallegada(LocalDate fechallegada) {
+		this.fechallegada = fechallegada;
+	}
 
 
 	public void setObra(Obra obra) {
@@ -167,6 +166,18 @@ public class Guia implements Serializable{
 	public void addDetalleGuia(DetalleGuia detalle) {
 		this.detalles.add(detalle);
 	}
+	
+
+	public Trabajador getTrabajador() {
+		return trabajador;
+	}
+
+
+	public void setTrabajador(Trabajador trabajador) {
+		this.trabajador = trabajador;
+	}
+
+
 
 	/**
 	 * 

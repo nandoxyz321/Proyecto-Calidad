@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.grupo4.demo.models.entity.Guia;
 import com.grupo4.demo.models.entity.Obra;
+import com.grupo4.demo.models.entity.DAO.IObraDAO;
 import com.grupo4.demo.models.entity.service.IGuiaService;
 import com.grupo4.demo.models.entity.service.IObraService;
 
@@ -19,6 +20,9 @@ import com.grupo4.demo.models.entity.service.IObraService;
 @RequestMapping("/obras")
 public class ObraController {
 
+	@Autowired
+	private IObraDAO obraDAO;
+	
 	@Autowired
 	private IObraService obraService;
 	
@@ -47,7 +51,38 @@ public class ObraController {
 			model.addAttribute("titulo", "formulario obras");
 			return "obras/formulario";
 		}
-		obraService.save(obra);
+		int codigo = obra.getNombreProyecto().hashCode();
+		if(codigo<0) {
+			codigo=codigo*-1;
+		}
+		if(obra.getIdObra()==null) {
+			if(obraDAO.findByCodigoObra(String.valueOf(codigo)).isPresent()) {
+				model.addAttribute("titulo", "formulario obras");
+				model.addAttribute("error", "la obra ya ha sido registrada");
+				return "obras/formulario";
+			}
+			
+			obra.setCodigoObra(String.valueOf(codigo));
+			obraService.save(obra);
+			
+		}else {
+			if(obraDAO.findByCodigoObra(String.valueOf(codigo)).isPresent()) {
+				
+				if (obraDAO.findByCodigoObra(String.valueOf(codigo)).orElse(null).getIdObra() == obra.getIdObra()) {
+					obraService.save(obra);
+					return "redirect:/obras/listado";
+				}
+				
+				model.addAttribute("titulo", "Editar obra");
+				model.addAttribute("error", "la obra ya ha sido registrada");
+				return "obras/formulario";
+				
+			}else {
+				obra.setCodigoObra(String.valueOf(codigo));
+				obraService.save(obra);
+			}
+		}
+		
 		return "redirect:/obras/listado";
 	}
 	
@@ -107,9 +142,9 @@ public class ObraController {
 		Obra obra = guia.getObra();
 		if(guia!=null) {
 			guiaService.delete(idGuia);
-			return "redirect:/obras/ver/"+ obra.getIdObra();
 		}
-		return "redirect:/obras/listado";
+		return "redirect:/obras/ver/"+ obra.getIdObra();
+		//return "redirect:/obras/listado";
 		
 	}
 	

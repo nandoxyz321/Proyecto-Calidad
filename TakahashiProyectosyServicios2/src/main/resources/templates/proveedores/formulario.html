@@ -22,7 +22,7 @@
 							<div class="card-body">
 								<h5 class="card-title"></h5>
 
-								<div class="row mb-3">
+								<!--  <div class="row mb-3">
 									<div class="col-6">
 										<label>CODIGO PROVEEDOR</label> <input type="text"
 											th:field="*{codigoProveedor}" class="form-control"
@@ -30,7 +30,7 @@
 											th:errorclass="'form-control alert-danger'"/>
 										<small class="form-text text-danger" th:if="${#fields.hasErrors('codigoProveedor')}" th:errors="*{codigoProveedor}"></small>
 									</div>
-								</div>
+								</div>-->
 
 								<div class="row mb-3">
 									<div class="col-6">
@@ -46,7 +46,8 @@
 											th:field="*{RUC}" class="form-control"
 											placeholder="INGRESE RUC"
 											th:errorclass="'form-control alert-danger'" />
-										 <small class="form-text text-danger" th:if="${#fields.hasErrors('RUC')}" th:errors="*{RUC}"></small> 
+										 <small class="form-text text-danger" th:if="${#fields.hasErrors('RUC')}" th:errors="*{RUC}" ></small>
+										 <small class="form-text text-danger" th:if="${error != null}" th:text="${error}" ></small> 
 									</div>
 								</div>
 

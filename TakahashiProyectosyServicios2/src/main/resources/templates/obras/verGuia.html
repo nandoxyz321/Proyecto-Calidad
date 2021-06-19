@@ -14,11 +14,17 @@
 
 
 			<div class="main-container">
+			
 				<div class="container">
-
+						
 					<div class="card mt-3">
+						
 						<div class="card-header text-center bg-danger text-white"
 							th:text="${titulo}"></div>
+							<div  class="container mt-2">
+								<a class="btn btn-warning  float-right" th:href="@{'/obras/verGuia/'+ ${guia.idGuia}(format=pdf)}">GENERAR PDF</a>
+							</div>
+							
 
 						<div class="card-body">
 							<div class="row mb-4">
@@ -39,7 +45,7 @@
 								
 							</div>
 
-							<div class="row mb-2">
+							<div class="row mb-4">
 								<div class="col-6">
 									<h4>fecha de salida:</h4>
 									<div class="p-2 border bg-light">
@@ -51,6 +57,22 @@
 									<h4>fecha de llegada:</h4>
 									<div class="p-2 border bg-light">
 										<h5 th:text="${guia.fechallegada}"></h5>
+									</div>
+								</div>
+							</div>
+							
+							<div class="row mb-4">
+								<div class="col-6">
+									<h4>trabajador:</h4>
+									<div class="p-2 border bg-light">
+										<h5 th:text="${guia.trabajador.nombre}"></h5>
+									</div>
+
+								</div>
+								<div class="col-6">
+									<h4>cargo:</h4>
+									<div class="p-2 border bg-light">
+										<h5 th:text="${guia.trabajador.rol}"></h5>
 									</div>
 								</div>
 							</div>

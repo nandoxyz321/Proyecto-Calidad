@@ -1,12 +1,16 @@
 package com.grupo4.demo.models.entity;
 
 import java.io.Serializable;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
@@ -21,6 +25,7 @@ public class Trabajador implements Serializable{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "idtrabajador")
 	private Long idTrabajador;
 	
 	//@NotEmpty
@@ -30,7 +35,7 @@ public class Trabajador implements Serializable{
 	
 	@NotEmpty
 	@Size(min = 1,max = 25,message = "el nombre debe contener no mas de 25 caracteres")
-	@Pattern(regexp = "^([a-zA-Z]+)(\\s[a-zA-Z]+)*$",message = "solo se admiten letras")
+	@Pattern(regexp = "^([a-zA-ZñÑáéíóúÁÉÍÓÚ]+)(\\s[a-zA-ZñÑáéíóúÁÉÍÓÚ]+)*$",message = "solo se admiten letras")
 	private String nombre;
 	
 	@NotEmpty
@@ -48,7 +53,8 @@ public class Trabajador implements Serializable{
 	private String dni;
 	
 	@NotEmpty(message = "el campo no puede estar vacio")
-	private String correo;
+	@Column(name = "correo")
+	private String email;
 	
 	@NotEmpty
 	@Size(min = 5,max =45, message = "se admite entre 5 y 45 caracteres")
@@ -58,9 +64,12 @@ public class Trabajador implements Serializable{
 	private String rol;
 	
 	//@NotEmpty
-	//@Size(min = 1, max = 8, message = "la contraseña no debe pasar los 8 caracteres")
+	//@Size(min = 1, max = 10, message = "la contraseña no debe pasar los 8 caracteres")
 	@Column(name="contraseña")
 	private String password;
+	
+	@OneToMany(mappedBy = "trabajador",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+	private List<Guia> guias;
 		
 	private static final long serialVersionUID = 1L;
 
@@ -105,12 +114,13 @@ public class Trabajador implements Serializable{
 		this.dni = dni;
 	}
 
-	public String getCorreo() {
-		return correo;
+
+	public String getEmail() {
+		return email;
 	}
 
-	public void setCorreo(String correo) {
-		this.correo = correo;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public String getDireccion() {
@@ -145,8 +155,18 @@ public class Trabajador implements Serializable{
 		this.password = password;
 	}
 
-	
+	public List<Guia> getGuias() {
+		return guias;
+	}
 
+	public void setGuias(List<Guia> guias) {
+		this.guias = guias;
+	}
+
+	public void addGuia(Guia guia) {
+		guias.add(guia);
+	}
+	
 
 	
 	

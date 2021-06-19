@@ -17,6 +17,7 @@
 								return{
 									value: item.idArticulo,
 									label: item.nombre,
+									stock: item.stock,
 								};
 							}));
 						},
@@ -34,6 +35,7 @@
 					
 					detalle = detalle.replace(/{idArticulo}/g, ui.item.value);
 					detalle = detalle.replace(/{NOMBRE}/g,ui.item.label);
+					detalle = detalle.replace(/{STOCK}/g,ui.item.stock);
 					
 					$("#cargarDetalleArticulos tbody").append(detalle);
 					

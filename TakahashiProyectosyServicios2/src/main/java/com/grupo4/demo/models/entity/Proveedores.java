@@ -21,17 +21,17 @@ public class Proveedores implements Serializable {
 	@Column(name = "idproveedor")
 	private Long idProveedores;
 	
-	@NotEmpty
+	/*@NotEmpty
 	@Size(min = 1,max = 6,message = "el código debe estar entre 1 y 6 caracteres")
 	@Column(name="codigoproveedor")
-	private String codigoProveedor;
+	private String codigoProveedor;*/
 	
 	@Size(min = 1,max = 45,message = "el campo debe tener entre 1 y 45 caracteres")
 	@Column(name = "razonsocial")
 	private String razonSocial;
 	
 	@NotEmpty
-	@Size(min = 1,max = 11, message = "el ruc debe estár entre 1 y 11 numeros")
+	@Size(min = 11,max = 11, message = "el ruc debe tener 11 dígitos")
 	@Pattern(regexp = "[0-9]+",message = "solo se admiten números")
 	@Column(name = "ruc")
 	private String RUC;
@@ -60,20 +60,6 @@ public class Proveedores implements Serializable {
 
 
 
-	public String getCodigoProveedor() {
-		return codigoProveedor;
-	}
-
-
-
-
-
-
-
-
-	public void setCodigoProveedor(String codigoProveedor) {
-		this.codigoProveedor = codigoProveedor;
-	}
 
 
 

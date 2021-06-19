@@ -27,8 +27,8 @@ public class Obra implements Serializable{
 	@Column(name = "idobra")
 	private Long idObra;
 	
-	@NotEmpty
-	@Size(min = 1,max = 6,message = "el código debe estar entre 1 y 6 caracteres")
+	//@NotEmpty
+	//@Size(min = 1,max = 6,message = "el código debe estar entre 1 y 6 caracteres")
 	@Column(name = "codigoobra")
 	private String codigoObra;
 	

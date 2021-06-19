@@ -19,6 +19,14 @@
     		<div class="container">
 
         <div class="card mt-3">
+        <div class="alert alert-success" th:if="${success != null}"
+			th:text="${success}"></div>
+		<div class="alert alert-danger" th:if="${error != null}"
+			th:text="${error}"></div>
+		<div class="alert alert-warning" th:if="${warning != null}"
+			th:text="${warning}"></div>
+		<div class="alert alert-info" th:if="${info != null}"
+			th:text="${info}"></div>
             <div class="card-header text-center bg-danger text-white" th:text="${titulo}">
                	LISTADO DE TRABAJADORES
             </div>
@@ -45,10 +53,11 @@
                             <td th:text="${item.apellido}"></td>
                             <td th:text="${item.telefono}"></td>
                             <td th:text="${item.dni}"></td>
-                            <td th:text="${item.correo}"></td>
+                            <td th:text="${item.email}"></td>
                             <td th:text="${item.direccion}"></td>
                             <td th:text="${item.rol}"></td>
-                            <td><a th:href="@{eliminar/}+${item.idTrabajador}" class="btn btn-danger" onclick="return confirm('Estas seguro de eliminar?');">delete</a></td>
+                            <td><a th:href="@{eliminar/}+${item.idTrabajador}" class="btn btn-danger" onclick="return confirm('Estas seguro de eliminar?');"><i class="far fa-trash-alt"></i></a>
+                            <a th:href="@{ver/}+${item.idTrabajador}" class="btn btn-info"><i class="fas fa-eye"></i></a></td>
                         </tr>
                     </tbody>
                 </table>

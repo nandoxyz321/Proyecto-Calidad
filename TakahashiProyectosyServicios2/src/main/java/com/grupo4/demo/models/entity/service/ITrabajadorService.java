@@ -9,4 +9,5 @@ public interface ITrabajadorService {
 	public void save(Trabajador trabajador);
 	public Trabajador findOne(Long idTrabajador);
 	public void delete (Long idTrabajador);
+	public Trabajador findByEmailAndDni(String email, String dni);
 }

@@ -41,6 +41,13 @@ public class TrabajadorServiceImpl implements ITrabajadorService{
 	public void delete(Long idTrabajador) {
 		// TODO Auto-generated method stub
 		trabajadorDao.deleteById(idTrabajador);
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public Trabajador findByEmailAndDni(String email, String dni) {
+		// TODO Auto-generated method stub
+		return trabajadorDao.findByEmailAndDni(email, dni).orElse(null);
 	}	
 
 }

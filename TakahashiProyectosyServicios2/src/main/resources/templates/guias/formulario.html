@@ -10,6 +10,14 @@
 		<div class="main-container">
 
 			<div class="container mt-3">
+			<div class="alert alert-success" th:if="${success != null}"
+			th:text="${success}"></div>
+		<div class="alert alert-danger" th:if="${error != null}"
+			th:text="${error}"></div>
+		<div class="alert alert-warning" th:if="${warning != null}"
+			th:text="${warning}"></div>
+		<div class="alert alert-info" th:if="${info != null}"
+			th:text="${info}"></div>
 				<div class="card">
 					<h2 class="card-header bg-danger text-white text-center"
 						th:text="${titulo}"></h2>
@@ -20,7 +28,7 @@
 							<div class="form-group row">
 								<label class="col-sm-2 col-form-label">SELECCIONE OBRA</label>
 								<div class="col-sm-6">
-									<select th:field="*{obra.idObra}" class="form-control">
+									<select th:field="*{obra.idObra}" class="form-control" required>
 										<option th:each="obr: ${listarobra}" th:value="${obr.idObra}"
 											th:text="${obr.nombreProyecto}"></option>
 									</select>
@@ -32,8 +40,8 @@
 								<label class="col-sm-2 col-form-label">CODIGO GUIA</label>
 								<div class="col-sm-6">
 									<input type="text" th:field="*{codigoGuia}"
-										class="form-control" placeholder="ingresar código" th:errorclass="'form-control alert-danger'"/>
-									<small class="form-text text-danger" th:if="${#fields.hasErrors('codigoGuia')}" th:errors="*{codigoGuia}"></small>
+										class="form-control" placeholder="código generado" readonly/>
+									<!--  <small class="form-text text-danger" th:if="${#fields.hasErrors('codigoGuia')}" th:errors="*{codigoGuia}"></small>-->
 								</div>
 							</div>
 
@@ -62,6 +70,7 @@
 									<input type="date" th:field="*{fechallegada}"
 										class="form-control" placeholder="ingresar destino" th:errorclass="'form-control alert-danger'"/>
 									<small class="form-text text-danger" th:if="${#fields.hasErrors('fechallegada')}" th:errors="*{fechallegada}"></small>
+									<small class="form-text text-danger" th:if="${error2 != null}" th:text="${error2}" ></small>
 								</div>
 							</div>
 
@@ -70,7 +79,7 @@
 									th:text="'Buscar Artículo'"></label>
 								<div class="col-sm-6">
 									<input type="text" name="buscar_articulo" id="buscar_articulo"
-										class="form-control" placeholder="ingresar destino" />
+										class="form-control" placeholder="buscar" />
 								</div>
 							</div>
 
