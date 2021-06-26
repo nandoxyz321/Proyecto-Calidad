@@ -3,6 +3,7 @@ package com.grupo4.demo.controller;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -29,7 +30,7 @@ public class ObraController {
 	@Autowired
 	private IGuiaService guiaService;
 	
-	
+	@Secured({"ROLE_ADMIN","ROLE_ALMAC","ROLE_SUPER","ROLE_OPERA"})
 	@RequestMapping(value="/listado")
 	public String listarObra(Model model) {
 		model.addAttribute("titulo", "Obras registrados");
@@ -37,6 +38,7 @@ public class ObraController {
 		return "obras/listado";
 	}
 	
+	@Secured({"ROLE_ADMIN","ROLE_ALMAC"})
 	@RequestMapping(value="/form",method = RequestMethod.GET)
 	public String crear(Model model) {
 		Obra obra = new Obra();
@@ -45,6 +47,7 @@ public class ObraController {
 		return "obras/formulario";
 	}
 	
+	@Secured({"ROLE_ADMIN","ROLE_ALMAC"})
 	@RequestMapping(value="/form",method=RequestMethod.POST)
 	public String guardar(@Valid Obra obra ,BindingResult result ,Model model) {
 		if(result.hasErrors()) {
@@ -86,6 +89,7 @@ public class ObraController {
 		return "redirect:/obras/listado";
 	}
 	
+	@Secured({"ROLE_ADMIN","ROLE_ALMAC"})
 	@RequestMapping(value = "/form/{idObra}")
 	public String editar(@PathVariable(value = "idObra") Long idObra, Model model) {
 		Obra obra = null;
@@ -99,6 +103,7 @@ public class ObraController {
 		return "obras/formulario";
 	}
 	
+	@Secured({"ROLE_ADMIN","ROLE_ALMAC"})
 	@RequestMapping("/eliminar/{idObra}")
 	public String eliminar(@PathVariable(value = "idObra")Long idObra) {
 		if(idObra>0) {
@@ -106,7 +111,7 @@ public class ObraController {
 		}
 		return "redirect:/obras/listado";
 	}
-	
+	@Secured({"ROLE_ADMIN","ROLE_ALMAC","ROLE_SUPER","ROLE_OPERA"})
 	@RequestMapping("/ver/{idObra}")
 	public String ver(@PathVariable(value="idObra") Long idObra, Model model) {
 		Obra obra = null;
@@ -121,7 +126,7 @@ public class ObraController {
 		return "obras/ver";
 	}
 	
-
+	@Secured({"ROLE_ADMIN","ROLE_ALMAC","ROLE_SUPER","ROLE_OPERA"})
 	@RequestMapping("/verGuia/{idGuia}")
 	public String verGuia(@PathVariable(value="idGuia") Long idGuia, Model model) {
 		Guia guia = null;
@@ -136,6 +141,7 @@ public class ObraController {
 		return "obras/verGuia";
 	}
 	
+	@Secured({"ROLE_ADMIN","ROLE_ALMAC","ROL_OPERA"})
 	@RequestMapping(value = "/eliminarGuia/{idGuia}",method = RequestMethod.GET)
 	public String eliminarGuia(@PathVariable(value = "idGuia")Long idGuia,Model model) {
 		Guia guia = guiaService.findOne(idGuia);

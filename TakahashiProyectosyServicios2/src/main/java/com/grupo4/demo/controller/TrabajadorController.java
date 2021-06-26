@@ -3,6 +3,7 @@ package com.grupo4.demo.controller;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -34,6 +35,7 @@ public class TrabajadorController {
 	@Autowired
 	private ITrabajadorService trabajadorservice;
 	
+	@Secured({"ROLE_ADMIN","ROLE_SUPER"})
 	@RequestMapping(value="/listado")
 	public String listar(Model model) {
 		model.addAttribute("titulo", "trabajadores registrados");
@@ -41,6 +43,7 @@ public class TrabajadorController {
 		return "trabajadores/listado";
 	}
 	
+	@Secured("ROLE_ADMIN")
 	@RequestMapping(value="/form", method = RequestMethod.GET)
 	public String crear(Model model) {
 		Trabajador trabajador = new Trabajador();
@@ -50,6 +53,7 @@ public class TrabajadorController {
 		return "trabajadores/formulario";
 	}
 	
+	@Secured("ROLE_ADMIN")
 	@RequestMapping(value="/form",method = RequestMethod.POST)
 	public String guardar(@Valid Trabajador trabajador, BindingResult result, Model model) {
 		if(result.hasErrors()) {
@@ -116,6 +120,7 @@ public class TrabajadorController {
 		return "redirect:/trabajadores/listado";
 	}
 	
+	@Secured( "ROLE_ADMIN")
 	@RequestMapping(value="/form/{idTrabajador}")
 	public String editar(@PathVariable(value="idTrabajador") Long idTrabajador, Model model){
 		Trabajador trabajador = null;
@@ -130,6 +135,7 @@ public class TrabajadorController {
 		return "trabajadores/formulario";
 	}
 	
+	@Secured( "ROLE_ADMIN")
 	@RequestMapping("/eliminar/{idTrabajador}")
 	public String eliminar(@PathVariable(value="idTrabajador") Long idTrabajador, RedirectAttributes flash) {
 		if(idTrabajador > 0) {
@@ -145,6 +151,7 @@ public class TrabajadorController {
 		return "redirect:/trabajadores/listado";
 	}
 	
+	@Secured({"ROLE_ADMIN","ROLE_SUPER"})
 	@RequestMapping("/ver/{idTrabajador}")
 	public String ver(@PathVariable(value="idTrabajador") Long idTrabajador, Model model) {
 		Trabajador trabajador= null;

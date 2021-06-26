@@ -33,7 +33,7 @@ public class Obra implements Serializable{
 	private String codigoObra;
 	
 	@Size(min = 1,max = 46,message = "el nombre debe contener no mas de 25 caracteres")
-	@Pattern(regexp = "^([a-zA-Z0-9]+)(\\s[a-zA-Z]+)*$",message = "solo se admiten letras y números")
+	@Pattern(regexp = "^([a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ]+)(\\s[a-zA-ZñÑáéíóúÁÉÍÓÚ]+)*$",message = "solo se admiten letras y números")
 	@Column(name = "nombreproyecto")
 	private String nombreProyecto;
 	

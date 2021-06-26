@@ -1,107 +1,125 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/thymeleaf-extras-springsecurity">
 
 <head th:fragment="head">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
-    <link rel="stylesheet" th:href="@{/css/style.css}">
-    <link rel="stylesheet" th:href="@{/css/all.css}">
-    <link rel="stylesheet" th:href="@{/css/jquery-ui.min.css}">
-    <script type="text/javascript" th:src="@{/js/jquery-3.5.1.min.js}"></script>
-	<script type="text/javascript" th:src="@{/js/bootstrap.min.js}"></script>
-	<script type="text/javascript" th:src="@{/js/popper.min.js}"></script>
-	<script type="text/javascript" th:src="@{/js/jquery-ui.min.js}"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Document</title>
+<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+<link rel="stylesheet" th:href="@{/css/style.css}">
+<link rel="stylesheet" th:href="@{/css/all.css}">
+<link rel="stylesheet" th:href="@{/css/jquery-ui.min.css}">
+<script type="text/javascript" th:src="@{/js/jquery-3.5.1.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/bootstrap.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/popper.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/jquery-ui.min.js}"></script>
 </head>
 
 <body>
-    <div class="wrapper">
-        <div th:fragment="header" class="header">
-            <div class="header-menu">
-                <div class="title">Takahashi <span>Proyectos y Servicioss</span></div>
-            </div>
-            <form th:action="@{/logout}" method="post">
-            <div align="right">
-                <button type="submit" class="btn btn-danger" href="">
-								<i class="fas fa-power-off"></i>Salir 
-							</button>
-            </div>
-            </form>
-        </div>
+	<div class="wrapper">
+		<div th:fragment="header" class="header">
+			<div class="header-menu">
+				<div class="title">
+					Takahashi <span>Proyectos y Servicioss</span>
+				</div>
+			</div>
+			<form th:action="@{/logout}" method="post">
+				<div align="right">
+					<button type="submit" class="btn btn-danger" href="">
+						<i class="fas fa-power-off"></i>Salir
+					</button>
+				</div>
+			</form>
+		</div>
 
-        <div th:fragment="sidebar" class="sidebar">  
-            <div class="sidebar-menu">
-                <center class="profile">
-                    <img th:src="@{/img/profile.jpg}" alt="">
-                    <p>ADMIN</p>
-                </center>
-                <li class="item">
-                    <a th:href="@{/principal}" class="menu-btn">
-                        <i class="fas fa-home"></i><span>Inicio</span>
-                    </a>
-                    
-                    <a th:href="@{/articulos/listado}" class="menu-btn"> 
-                        <i class="fas fa-tools"></i><span>Artículos <i class="fas fa-chevron-circle-down drop-down"></i></span>
-                    </a>
-                    
-                    <a th:href="@{/trabajadores/listado}" class="menu-btn"> 
-                        <i class="fas fa-user-tie"></i><span>Trabajador <i class="fas fa-chevron-circle-down drop-down"></i></span>
-                    </a>
-                    
-                    <a th:href="@{/categorias/listado}" class="menu-btn"> 
-                        <i class="fas fa-align-justify"></i><span>Categorias <i class="fas fa-chevron-circle-down drop-down"></i></span>
-                    </a>
-                    
-                    <a th:href="@{/proveedores/listado}" class="menu-btn"> 
-                        <i class="fas fa-dolly-flatbed"></i><span>Proveedores <i class="fas fa-chevron-circle-down drop-down"></i></span>
-                    </a>
-                    
-                    <a th:href="@{/obras/listado}" class="menu-btn"> 
-                        <i class="fas fa-briefcase"></i><span>Obras <i class="fas fa-chevron-circle-down drop-down"></i></span>
-                    </a>
-                    
-                    <a th:href="@{/guias/form}" class="menu-btn"> 
-                        <i class="fas fa-clipboard-list"></i><span>generar guia <i class="fas fa-chevron-circle-down drop-down"></i></span>
-                    </a>
-                    
-                    
-                </li>
-                
-                
-                
-                <li class="item" id="profile">
-                    <!-- <form th:action="@{/logout}" method="post">
+		<div th:fragment="sidebar" class="sidebar">
+			<div class="sidebar-menu">
+				<center class="profile">
+					<img th:src="@{/img/profile.jpg}" alt=""><
+						<p>SISTEMA DE </p>
+						<p>INVENTARIO</p> 
+				</center>
+				
+				
+					
+				<li class="item"><a th:href="@{/principal}" class="menu-btn">
+						<i class="fas fa-home"></i><span>Inicio</span>
+				</a> <a sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_ALMAC','ROLE_SUPER','ROLE_OPERA')" th:href="@{/articulos/listado}" class="menu-btn"> <i
+						class="fas fa-tools"></i><span>Artículos <i
+							class="fas fa-chevron-circle-down drop-down"></i></span>
+				</a> <a sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_SUPER')" th:href="@{/trabajadores/listado}" class="menu-btn"> <i
+						class="fas fa-user-tie"></i><span>Trabajador <i
+							class="fas fa-chevron-circle-down drop-down"></i></span>
+				</a> <a sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_ALMAC','ROLE_SUPER')" th:href="@{/categorias/listado}" class="menu-btn"> <i
+						class="fas fa-align-justify"></i><span>Categorias <i
+							class="fas fa-chevron-circle-down drop-down"></i></span>
+				</a> <a sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_ALMAC','ROLE_SUPER')" th:href="@{/proveedores/listado}" class="menu-btn"> <i
+						class="fas fa-dolly-flatbed"></i><span>Proveedores <i
+							class="fas fa-chevron-circle-down drop-down"></i></span>
+				</a> <a sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_ALMAC','ROLE_SUPER','ROLE_OPERA')" th:href="@{/obras/listado}" class="menu-btn"> <i
+						class="fas fa-briefcase"></i><span>Obras <i
+							class="fas fa-chevron-circle-down drop-down"></i></span>
+				</a> <a sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_ALMAC','ROLE_OPERA')" th:href="@{/guias/form}" class="menu-btn"> <i
+						class="fas fa-clipboard-list"></i><span>generar guia <i
+							class="fas fa-chevron-circle-down drop-down"></i></span>
+				</a></li>
+
+
+
+				<li class="item" id="profile">
+					<!-- <form th:action="@{/logout}" method="post">
 						<li><button type="submit" class="btn btn-danger" href="">
 								<i class="fas fa-power-off"></i>Salir del sistema
 							</button></li>
 					</form> -->
-                </li>
-            </div>
-        </div>
+				</li>
+			</div>
+		</div>
 
-        <div class="main-container">
-
-
+		<div class="main-container">
 
 
-            <!--CONTENIDO-->
-            <div class="card">
-                <div class="card-header">
-                  Featured
-                </div>
-                <div class="card-body">
-                  <h5 class="card-title">Special title treatment</h5>
-                  <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                  <a href="#" class="btn btn-primary">Go somewhere</a>
-                </div>
-              </div>
 
-            <!--FIN CONTENIDO-->
 
-        </div>
-        
-        <div class="alert alert-success" th:if="${success != null}"
+			<div class="container">
+			<div class="card">
+				<div class="card-header bg-danger text-white">Bienvenido usuario : <span th:text="${#httpServletRequest.remoteUser}"></span></div>
+				<div sec:authorize="hasRole('ROLE_ADMIN')" class="card-body">
+					<h5 class="card-title">ustéd al tener el rol de administrador tiene estos permisos:</h5>
+					
+					<p class="card-text">tiene control totao del sistema y es el único que puede crear y modificar usuarios</p>
+					<a th:href="@{/articulos/listado}" class="btn btn-info">ver los artículos</a>
+				</div>
+				<div sec:authorize="hasRole('ROLE_ALMAC')" class="card-body">
+					<h5 class="card-title">ustéd al tener el rol de almacenero tiene estos permisos:</h5>
+					<p class="card-text">puede crear y mantener los artículos</p>
+					<p class="card-text">puede crear y mantener a los proveedores</p>
+					<p class="card-text">puede crear y mantener las categorias</p>
+					<p class="card-text">puede crear y mantener las obras</p>
+					<p class="card-text">y emitir guias de remision</p>
+					
+					<a th:href="@{/articulos/listado}" class="btn btn-info">ver los artículos</a>
+				</div>
+				<div sec:authorize="hasRole('ROLE_OPERA')" class="card-body">
+					<h5 class="card-title">ustéd al tener el rol de operario tiene estos permisos:</h5>
+					<p class="card-text">puede crear, mantener los artículos</p>
+					<p class="card-text">y emitir guias de remision</p>
+					<a th:href="@{/articulos/listado}" class="btn btn-info">ver los artículos</a>
+				</div>
+				<div sec:authorize="hasRole('ROLE_SUPER')" class="card-body">
+					<h5 class="card-title">ustéd al tener el rol de supervisor tiene estos permisos:</h5>
+					<p class="card-text">puede emitir guias de remision</p>
+					<p class="card-text">además de ver el listado de artículos , proveedores , categorias y obras</p>
+					<a th:href="@{/articulos/listado}" class="btn btn-info">ver los artículos</a>
+				</div>
+			</div>
+			</div>
+			
+
+		</div>
+
+		<div class="alert alert-success" th:if="${success != null}"
 			th:text="${success}"></div>
 		<div class="alert alert-danger" th:if="${error != null}"
 			th:text="${error}"></div>
@@ -110,7 +128,7 @@
 		<div class="alert alert-info" th:if="${info != null}"
 			th:text="${info}"></div>
 
-    </div>
+	</div>
 </body>
 
 </html>

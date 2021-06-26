@@ -44,12 +44,12 @@
                             <td><a th:href="@{form/}+${item.idProveedores}" th:text="${item.idProveedores}"></a></td>
                             <td th:text="${item.razonSocial}"></td>
                             <td th:text="${item.RUC}"></td>
-                            <td><a th:href="@{eliminar/}+${item.idProveedores}" class="btn btn-danger" onclick="return confirm('Estas seguro de eliminar?');">delete</a></td>
+                            <td sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_ALMAC')" ><a th:href="@{eliminar/}+${item.idProveedores}" class="btn btn-danger" onclick="return confirm('Estas seguro de eliminar?');">delete</a></td>
                         </tr>
                     </tbody>
                 </table>
                 <br>
-                <a th:href="@{form}" class="btn btn-info">nuevo proveedor</a>
+                <a sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_ALMAC')"  th:href="@{form}" class="btn btn-info">nuevo proveedor</a>
             </div>
         </div>
 

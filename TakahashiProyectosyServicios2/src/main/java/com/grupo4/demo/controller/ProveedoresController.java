@@ -3,6 +3,7 @@ package com.grupo4.demo.controller;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -29,6 +30,7 @@ public class ProveedoresController {
 	@Autowired
 	private IProveedoresService proveedoresService;
 	
+	@Secured({"ROLE_ADMIN","ROLE_ALMAC","ROLE_SUPER"})
 	@RequestMapping(value="/listado")
 	public String listar(Model model) {
 		model.addAttribute("titulo", "Proveedores registrados");
@@ -36,6 +38,7 @@ public class ProveedoresController {
 		return "proveedores/listado";
 	}
 	
+	@Secured({"ROLE_ADMIN","ROLE_ALMAC"})
 	@RequestMapping(value="/form", method = RequestMethod.GET)
 	public String crear(Model model) {
 		Proveedores proveedores= new Proveedores();
@@ -44,6 +47,7 @@ public class ProveedoresController {
 		return "proveedores/formulario";
 	}
 	
+	@Secured({"ROLE_ADMIN","ROLE_ALMAC"})
 	@RequestMapping(value="/form",method = RequestMethod.POST)
 	public String guardar(@Valid Proveedores proveedores,BindingResult result,Model model) {
 		
@@ -84,6 +88,7 @@ public class ProveedoresController {
 		return "redirect:/proveedores/listado";
 	}
 	
+	@Secured({"ROLE_ADMIN","ROLE_ALMAC"})
 	@RequestMapping(value="/form/{idProveedores}")
 	public String editar(@PathVariable(value="idProveedores") Long idProveedores, Model model){
 		Proveedores proveedores = null;
@@ -97,6 +102,7 @@ public class ProveedoresController {
 		return "proveedores/formulario";
 	}
 	
+	@Secured({"ROLE_ADMIN","ROLE_ALMAC"})
 	@RequestMapping("/eliminar/{idProveedores}")
 	public String eliminar(@PathVariable(value="idProveedores") Long idProveedores, RedirectAttributes flash) {
 		if(idProveedores > 0) {

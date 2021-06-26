@@ -5,6 +5,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -42,6 +43,7 @@ public class ArticuloController {
 	@Autowired
 	private ICategoriaService categoriaservice;
 	
+	@Secured({"ROLE_ADMIN","ROLE_SUPER","ROLE_ALMAC","ROLE_OPERA"})
 	@RequestMapping(value="/listado")
 	public String listarArticulo(Model model) {
 		model.addAttribute("titulo", "Artículos registrados");
@@ -49,6 +51,7 @@ public class ArticuloController {
 		return "articulos/listado";
 	}
 	
+	@Secured({"ROLE_ADMIN","ROLE_ALMAC","ROLE_OPERA"})
 	@RequestMapping(value="/form",method = RequestMethod.GET)
 	public String crear(Model model) {
 		Articulo articulo = new Articulo();
@@ -57,6 +60,7 @@ public class ArticuloController {
 		return "articulos/formulario";
 	}
 	
+	@Secured({"ROLE_ADMIN","ROLE_ALMAC","ROLE_OPERA"})
 	@RequestMapping(value="/form",method=RequestMethod.POST)
 	public String guardar(@Valid Articulo articulo,BindingResult result ,Model model) {
 		if(result.hasErrors()) {
@@ -124,6 +128,7 @@ public class ArticuloController {
 		return "redirect:/articulos/listado";
 	}
 	
+	@Secured({"ROLE_ADMIN","ROLE_ALMAC","ROLE_OPERA"})
 	@RequestMapping(value = "/form/{idArticulo}")
 	public String editar(@PathVariable(value = "idArticulo") Long idArticulo, Model model) {
 		Articulo articulo = null;
@@ -137,6 +142,7 @@ public class ArticuloController {
 		return "articulos/formulario";
 	}
 	
+	@Secured({"ROLE_ADMIN","ROLE_ALMAC"})
 	@RequestMapping("/eliminar/{idArticulo}")
 	public String eliminar(@PathVariable(value = "idArticulo")Long idArticulo, RedirectAttributes flash) {
 		if(idArticulo>0) {

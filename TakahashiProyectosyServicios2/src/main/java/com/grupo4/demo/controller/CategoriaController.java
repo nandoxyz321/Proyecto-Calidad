@@ -3,6 +3,7 @@ package com.grupo4.demo.controller;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -29,6 +30,7 @@ public class CategoriaController {
 	@Autowired
 	private ICategoriaService categoriaService;
 	
+	@Secured({"ROLE_ADMIN","ROLE_ALMAC","ROLE_SUPER"})
 	@RequestMapping(value="/listado")
 	public String listarCategoria(Model model) {
 		model.addAttribute("titulo", "Categorias registradas");
@@ -36,6 +38,7 @@ public class CategoriaController {
 		return "categorias/listado";
 	}
 	
+	@Secured({"ROLE_ADMIN","ROLE_ALMAC"})
 	@RequestMapping(value="/form",method = RequestMethod.GET)
 	public String crear(Model model) {
 		Categoria categoria= new Categoria();
@@ -44,6 +47,7 @@ public class CategoriaController {
 		return "categorias/formulario";
 	}
 	
+	@Secured({"ROLE_ADMIN","ROLE_ALMAC"})
 	@RequestMapping(value="/form",method=RequestMethod.POST)
 	public String guardar(@Valid Categoria categoria, BindingResult result,Model model) {
 		if(result.hasErrors()) {
@@ -86,6 +90,7 @@ public class CategoriaController {
 		return "redirect:/categorias/listado";
 	}
 	
+	@Secured({"ROLE_ADMIN","ROLE_ALMAC"})
 	@RequestMapping(value = "/form/{idCategoria}")
 	public String editar(@PathVariable(value = "idCategoria") Long idCategoria, Model model) {
 		Categoria categoria = null;
@@ -99,6 +104,7 @@ public class CategoriaController {
 		return "categorias/formulario";
 	}
 	
+	@Secured({"ROLE_ADMIN","ROLE_ALMAC"})
 	@RequestMapping("/eliminar/{idCategoria}")
 	public String eliminar(@PathVariable(value = "idCategoria")Long idCategoria, RedirectAttributes flash) {
 		if(idCategoria>0) {

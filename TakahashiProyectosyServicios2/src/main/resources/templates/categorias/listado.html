@@ -40,13 +40,13 @@
 									th:text="${item.idCategoria}"></a></td>
 								<td th:text="${item.nombre}"></td>
 								<td th:text="${item.descripcion}"></td>
-								<td><a th:href="@{eliminar/}+${item.idCategoria}"
+								<td><a sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_ALMAC')" th:href="@{eliminar/}+${item.idCategoria}"
 									class="btn btn-danger"
 									onclick="return confirm('Estas seguro de eliminar?');">delete</a></td>
 							</tr>
 						</tbody>
 					</table>
-					<br> <a th:href="@{form}" class="btn btn-info">nueva
+					<br> <a sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_ALMAC')" th:href="@{form}" class="btn btn-info">nueva
 						categoria</a>
 				</div>
 			</div>

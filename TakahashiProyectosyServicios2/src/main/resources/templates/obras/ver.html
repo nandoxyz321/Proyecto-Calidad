@@ -98,7 +98,7 @@
 										<td th:text="${guia.destino}"></td>
 										<td th:text="${guia.fechaSalida}"></td>
 										<td th:text="${guia.fechallegada}"></td>
-										<td><a class="btn btn-danger btn-sm" th:href="@{/obras/eliminarGuia/}+${guia.idGuia}" th:text="eliminar" onclick="return confirm('¿Estas seguro de eliminar la guia?')"></a></td>
+										<td sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_ALMAC')" ><a class="btn btn-danger btn-sm" th:href="@{/obras/eliminarGuia/}+${guia.idGuia}" th:text="eliminar" onclick="return confirm('¿Estas seguro de eliminar la guia?')"></a></td>
 
 
 

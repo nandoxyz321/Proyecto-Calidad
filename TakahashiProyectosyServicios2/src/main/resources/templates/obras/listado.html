@@ -38,7 +38,7 @@
 										<td th:text="${item.direccion}"></td>
 										<td th:text="${item.razonSocialCliente}"></td>
 										<td th:text="${item.nombreRepresentante}"></td>
-										<td><a th:href="@{eliminar/}+${item.idObra}"
+										<td><a sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_ALMAC')" th:href="@{eliminar/}+${item.idObra}"
 											class="btn btn-danger"
 											onclick="return confirm('Estas seguro de eliminar?');"><i class="far fa-trash-alt"></i></a>
 											<a th:href="@{ver/}+${item.idObra}"
@@ -46,7 +46,7 @@
 									</tr>
 								</tbody>
 							</table>
-							<br> <a th:href="@{form}" class="btn btn-info">nueva
+							<br> <a sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_ALMAC')" th:href="@{form}" class="btn btn-info">nueva
 								obra</a>
 						</div>
 					</div>

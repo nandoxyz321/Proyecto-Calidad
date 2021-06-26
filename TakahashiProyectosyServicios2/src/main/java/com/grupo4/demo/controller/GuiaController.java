@@ -5,6 +5,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -57,6 +58,7 @@ public class GuiaController {
 	@Autowired
 	private IGuiaService guiaService;
 	
+	@Secured({"ROLE_ADMIN","ROLE_ALMAC","ROLE_OPERA"})
 	@RequestMapping(value="/form",method = RequestMethod.GET)
 	public String crear(Model model) {
 		Guia guia = new Guia();
@@ -87,6 +89,7 @@ public class GuiaController {
 		return articuloService.findbyNombre(term,prov,cate);
 	}
 	
+	@Secured({"ROLE_ADMIN","ROLE_ALMAC","ROLE_OPERA"})
 	@PostMapping(value="/form")
 	public String guardar(@Valid Guia guia,BindingResult result,Model model,
 			@RequestParam(name="detalle_idArticulo[]",required = false) Long[] detalleID,
