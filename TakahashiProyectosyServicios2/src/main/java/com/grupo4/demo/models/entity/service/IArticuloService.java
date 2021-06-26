@@ -11,7 +11,7 @@ public interface IArticuloService {
 	public void save(Articulo articulo);
 	public Articulo findOne(Long idArticulo);
 	public void delete(Long idArticulo);
-	public List<Articulo> findbyNombre(String term);
+	public List<Articulo> findbyNombre(String term, Long prov, Long cate);
 	public void saveGuia(Guia guia);
 	
 	

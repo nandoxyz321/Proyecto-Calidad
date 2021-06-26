@@ -78,6 +78,8 @@ public class TrabajadorController {
 			//código generado
 			trabajador.setUsername(username);
 			
+			System.out.println(trabajador.getPassword());
+			
 			//encriptando contraseña
 			String contraseñaEncript = passwordEncoder.encode(trabajador.getPassword());
 			

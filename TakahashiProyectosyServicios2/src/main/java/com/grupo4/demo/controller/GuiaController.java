@@ -21,14 +21,18 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.grupo4.demo.models.entity.Articulo;
+import com.grupo4.demo.models.entity.Categoria;
 import com.grupo4.demo.models.entity.DetalleGuia;
 import com.grupo4.demo.models.entity.Guia;
 import com.grupo4.demo.models.entity.Obra;
+import com.grupo4.demo.models.entity.Proveedores;
 import com.grupo4.demo.models.entity.Trabajador;
 import com.grupo4.demo.models.entity.DAO.ITrabajadorDAO;
 import com.grupo4.demo.models.entity.service.IArticuloService;
+import com.grupo4.demo.models.entity.service.ICategoriaService;
 import com.grupo4.demo.models.entity.service.IGuiaService;
 import com.grupo4.demo.models.entity.service.IObraService;
+import com.grupo4.demo.models.entity.service.IProveedoresService;
 
 
 @Controller
@@ -43,6 +47,12 @@ public class GuiaController {
 	
 	@Autowired
 	private IArticuloService articuloService;
+	
+	@Autowired
+	private IProveedoresService proveedorService;
+	
+	@Autowired
+	private ICategoriaService categoriaService;
 	
 	@Autowired
 	private IGuiaService guiaService;
@@ -60,9 +70,21 @@ public class GuiaController {
 		return obraService.findall();
 	}
 	
-	@GetMapping(value="/cargar-articulos/{term}", produces= {"application/json"})
-	public @ResponseBody List<Articulo> cargarArticulos(@PathVariable String term){
-		return articuloService.findbyNombre(term);
+	@ModelAttribute("listarcategoria")
+	public List<Categoria> categoria(Model model){
+		return categoriaService.findAll();
+	}
+	
+	@ModelAttribute("listarproveedor")
+	public List<Proveedores> proveedores(Model model){
+		return proveedorService.findall();
+	}
+	
+	@GetMapping(value="/cargar-articulos/{term}/{prov}/{cate}", produces= {"application/json"})
+	public @ResponseBody List<Articulo> cargarArticulos(@PathVariable String term, @PathVariable Long prov, @PathVariable Long cate ){
+		System.out.println(prov);
+		System.out.println(term);
+		return articuloService.findbyNombre(term,prov,cate);
 	}
 	
 	@PostMapping(value="/form")

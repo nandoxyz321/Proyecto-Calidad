@@ -6,11 +6,15 @@
 		$(document).ready(function(){
 			$("#buscar_articulo").autocomplete({
 				source: function(request, response){
+					var proveedorid = $("#prov").val();
+					var categoriaid = $("#cate").val();
 					$.ajax({
-						url: "/guias/cargar-articulos/" + request.term,
+						url: "/guias/cargar-articulos/" + request.term + "/"+proveedorid+"/"+categoriaid,
 						datatype: "json",
 						data:{
-							term: request.term
+							term: request.term,
+							prov: proveedorid,
+							cate: categoriaid
 						},
 						success: function(data){
 							response($.map(data,function(item){

@@ -50,9 +50,9 @@ public class ArticuloServiceImpl implements IArticuloService{
 
 	@Override
 	@Transactional(readOnly = true)
-	public List<Articulo> findbyNombre(String term) {
+	public List<Articulo> findbyNombre(String term,Long prov, Long cate) {
 		// TODO Auto-generated method stub
-		return articuloDAO.findbyNombre(term);
+		return articuloDAO.findbyNombre(term,prov,cate);
 	}
 
 	@Override

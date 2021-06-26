@@ -90,7 +90,7 @@
 
                     <div class="col-6" th:if="${pass == 1}" >
                         <label>CONTRASEÑA TRABAJADOR</label>
-                        <input type="text" th:field="*{password}" class="form-control" placeholder="INGRESE CONTRASEÑA" maxlength="10" minlength="1" required />
+                        <input type="password" th:field="*{password}" class="form-control" placeholder="INGRESE CONTRASEÑA" maxlength="10" minlength="1" required />
                         <small class="form-text text-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></small> 
                     </div>
                 </div>
