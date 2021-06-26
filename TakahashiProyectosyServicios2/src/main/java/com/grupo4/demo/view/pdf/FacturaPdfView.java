@@ -36,6 +36,8 @@ public class FacturaPdfView extends AbstractPdfView {
 		
 		table.addCell(cell);
 		table.addCell("código: "+guia.getCodigoGuia());
+		table.addCell("motivo de traslado: "+guia.getTipoguia());
+		table.addCell("transportista: "+guia.getTransportista());
 		table.addCell("destino: "+guia.getDestino());
 		table.addCell("fecha de salida: "+guia.getFechaSalida().toString());
 		table.addCell("fecha de llegada: "+guia.getFechallegada().toString());

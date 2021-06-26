@@ -19,6 +19,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.FutureOrPresent;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -37,6 +38,15 @@ public class Guia implements Serializable{
 	//@Size(min = 1, max = 6, message = "el código debe estar entre 1 y 6 caracteres ")
 	@Column(name = "codigoguia")
 	private String codigoGuia;
+	
+	@Column(name="tipoguia")
+	private String tipoguia;
+	
+	@NotEmpty
+	@Size(min = 1,max = 40,message = "el nombre debe contener no mas de 40 caracteres")
+	@Pattern(regexp = "^([a-zA-ZñÑáéíóúÁÉÍÓÚ]+)(\\s[a-zA-ZñÑáéíóúÁÉÍÓÚ]+)*$",message = "solo se admiten letras")
+	@Column(name = "transportista")
+	private String transportista;
 	
 	@NotEmpty
 	@Size(min = 1, max = 50, message = "el destino debe estar entre 1 y 50 caracteres ")
@@ -176,6 +186,29 @@ public class Guia implements Serializable{
 	public void setTrabajador(Trabajador trabajador) {
 		this.trabajador = trabajador;
 	}
+	
+	
+
+
+	public String getTipoguia() {
+		return tipoguia;
+	}
+
+
+	public void setTipoguia(String tipoguia) {
+		this.tipoguia = tipoguia;
+	}
+
+
+	public String getTransportista() {
+		return transportista;
+	}
+
+
+	public void setTransportista(String transportista) {
+		this.transportista = transportista;
+	}
+
 
 
 
