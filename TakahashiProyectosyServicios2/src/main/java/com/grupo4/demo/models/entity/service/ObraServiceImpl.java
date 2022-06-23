@@ -18,28 +18,24 @@ public class ObraServiceImpl implements IObraService{
 	@Override
 	@Transactional(readOnly = true)
 	public List<Obra> findall() {
-		// TODO Auto-generated method stub
 		return (List<Obra>) obraDAO.findAll();
 	}
 
 	@Override
 	@Transactional
 	public void save(Obra obra) {
-		// TODO Auto-generated method stub
 		obraDAO.save(obra);
 	}
 
 	@Override
 	@Transactional(readOnly = true)
 	public Obra findOne(Long idObra) {
-		// TODO Auto-generated method stub
 		return obraDAO.findById(idObra).orElse(null);
 	}
 
 	@Override
 	@Transactional
 	public void delete(Long idObra) {
-		// TODO Auto-generated method stub
 		obraDAO.deleteById(idObra);
 	}
 

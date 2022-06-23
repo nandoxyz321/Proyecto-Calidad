@@ -17,28 +17,24 @@ public class ProveedoresServiceImpl implements IProveedoresService{
 	@Override
 	@Transactional(readOnly = true)
 	public List<Proveedores> findall() {
-		// TODO Auto-generated method stub
 		return (List<Proveedores>) proveedorDAO.findAll();
 	}
 
 	@Override
 	@Transactional
 	public void save(Proveedores proveedores) {
-		// TODO Auto-generated method stub
 		proveedorDAO.save(proveedores);
 	}
 
 	@Override
 	@Transactional(readOnly = true)
 	public Proveedores findOne(Long idProveedores) {
-		// TODO Auto-generated method stub
 		return proveedorDAO.findById(idProveedores).orElse(null);
 	}
 
 	@Override
 	@Transactional
 	public void delete(Long idProveedores) {
-		// TODO Auto-generated method stub
 		proveedorDAO.deleteById(idProveedores);
 	}
 	

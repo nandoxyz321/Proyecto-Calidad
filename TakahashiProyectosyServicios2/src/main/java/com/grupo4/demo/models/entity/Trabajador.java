@@ -68,6 +68,17 @@ public class Trabajador implements Serializable{
 	@Column(name="contraseña")
 	private String password;
 	
+	@Column(name="recuperar")
+	private String recuperar;
+	
+	public String getRecuperar() {
+		return recuperar;
+	}
+
+	public void setRecuperar(String recuperar) {
+		this.recuperar = recuperar;
+	}
+
 	@OneToMany(mappedBy = "trabajador",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
 	private List<Guia> guias;
 		

@@ -18,28 +18,24 @@ public class GuiaServiceImpl implements IGuiaService{
 	@Override
 	@Transactional(readOnly = true)
 	public List<Guia> findAll() {
-		// TODO Auto-generated method stub
 		return (List<Guia>) guiaDAO.findAll();
 	}
 
 	@Override
 	@Transactional
 	public void save(Guia guia) {
-		// TODO Auto-generated method stub
 		guiaDAO.save(guia);
 	}
 
 	@Override
 	@Transactional(readOnly = true)
 	public Guia findOne(Long idGuia) {
-		// TODO Auto-generated method stub
 		return guiaDAO.findById(idGuia).orElse(null);
 	}
 
 	@Override
 	@Transactional
 	public void delete(Long idGuia) {
-		// TODO Auto-generated method stub
 		guiaDAO.deleteById(idGuia);
 	}
 	

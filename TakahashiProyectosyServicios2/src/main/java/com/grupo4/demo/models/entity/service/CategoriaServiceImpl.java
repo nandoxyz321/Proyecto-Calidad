@@ -18,28 +18,24 @@ public class CategoriaServiceImpl implements ICategoriaService{
 	@Override
 	@Transactional(readOnly = true)
 	public List<Categoria> findAll() {
-		// TODO Auto-generated method stub
 		return  (List<Categoria>) categoriaDAO.findAll();
 	}
 
 	@Override
 	@Transactional
 	public void save(Categoria categoria) {
-		// TODO Auto-generated method stub
 		categoriaDAO.save(categoria);
 	}
 
 	@Override
 	@Transactional(readOnly = true)
 	public Categoria findOne(Long idCategoria) {
-		// TODO Auto-generated method stub
 		return categoriaDAO.findById(idCategoria).orElse(null);
 	}
 
 	@Override
 	@Transactional
 	public void delete(Long idCategoria) {
-		// TODO Auto-generated method stub
 		categoriaDAO.deleteById(idCategoria);
 	}
 	

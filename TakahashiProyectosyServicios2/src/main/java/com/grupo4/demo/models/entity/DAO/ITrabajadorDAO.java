@@ -13,4 +13,5 @@ public interface ITrabajadorDAO extends CrudRepository<Trabajador, Long>{
 	public Optional<Trabajador> findByEmailAndDni(String email, String dni);
 	
 	public Optional<Trabajador> findByDni(String dni);
+	
 }

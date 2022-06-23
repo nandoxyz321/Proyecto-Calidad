@@ -88,7 +88,7 @@
 				<div sec:authorize="hasRole('ROLE_ADMIN')" class="card-body">
 					<h5 class="card-title">ustéd al tener el rol de administrador tiene estos permisos:</h5>
 					
-					<p class="card-text">tiene control totao del sistema y es el único que puede crear y modificar usuarios</p>
+					<p class="card-text">tiene control total del sistema y es el único que puede crear y modificar usuarios</p>
 					<a th:href="@{/articulos/listado}" class="btn btn-info">ver los artículos</a>
 				</div>
 				<div sec:authorize="hasRole('ROLE_ALMAC')" class="card-body">
