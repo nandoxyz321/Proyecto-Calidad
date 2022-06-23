@@ -44,7 +44,7 @@ public class LoginController {
 	
 	@RequestMapping(value = "/login/peticion",method = RequestMethod.POST)
 	public String recuperar(@RequestParam("email") String Email, @RequestParam("dni") String Dni, Model model,RedirectAttributes flash) {
-		/*Trabajador trabajador = trabajadorService.findByEmailAndDni(Email, Dni);
+		Trabajador trabajador = trabajadorService.findByEmailAndDni(Email, Dni);
 		if(trabajador != null) {
 			String username = trabajador.getUsername();
 			String recuperado = trabajadorService.codificacionDencrypt(trabajador.getRecuperar());
@@ -53,7 +53,7 @@ public class LoginController {
 			return "redirect:/";
 		}else {
 			model.addAttribute("error", "no se encontraron datos relacionados o los datos son incorrectos");
-		}*/
+		}
 		return "login/peticion";
 	}
 }
